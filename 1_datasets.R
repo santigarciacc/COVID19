@@ -44,10 +44,10 @@ ita_covid19_data <-
 
 ##
 ## SPAIN: since cumulative infected > 100 (02/03/2020)
-inf_day_spa <- c(36, 45, 57, 37, 141, 100, 173, 400, 623, 506, 822, 1259, 1544,
-                 2000, 1630, 1890, 2443, 3431, 2833, 4946, 3646, 4517, 6584,
-                 7937, 8578) # Infected per day
-cum_inf_spa <- 10 +  cumsum(inf_day_spa) # Cum infected
+inf_day_spa <- c(36, 45, 57, 37, 141, 100, 173, 400, 622, 582, 869, 2086, 1159,
+                 1407, 2144, 1806, 2162, 4053, 2447, 4964, 3394, 6368, 4749,
+                 9630, 6673) # Infected per day
+cum_inf_spa <- 84 +  cumsum(inf_day_spa) # Cum infected
 
 died_day_spa <- c(0, 1, 1, 1, 2, 5, 7, 10, 8, 12, 37, 34, 18, 152, 21, 188, 101,
                   169, 215, 344, 394, 462, 514, 738, 655) # Died per day
