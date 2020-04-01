@@ -41,7 +41,7 @@ dates <- as.Date(c(from_date, to_date)) # DO NOT CHANGE
 save_local <- TRUE
 
 # N_HAB: Do you want to show all data in a relative way, in terms of
-# each n_hab people? For example, deaths or cases each 10.000 people
+# each n_hab people? For example, each 10.000 people (n_hab = 10000)
 n_hab <- FALSE # If n_hab <- FALSE, deaths or cases are plotted as usual
 
 # ALIGNED: Do you want to align the data, starting all graphics at Day 0,
@@ -68,6 +68,17 @@ plot_a_deaths <- TRUE # A graphic about the % growth of velocity of deaths (acce
 ##########################################
 #### FROM HERE, DO NOT CHANGE THE CODE ###
 ##########################################
+
+#
+# Example of using: write
+# ECDC_ESP$covid_data # covid19 data of Spain from the selected dates
+# ECDC_ESP$country # Country code
+# ECDC_ESP$population # Population in the databases are from the World Bank
+#
+# writting graphics_countries$fig_cum_deaths plots cumulative deaths
+#
+# If you write "graphics_countries$" (without quotes), and then, press tab key,
+# a menu will appear with the different graphics available.
 
 
 ##
