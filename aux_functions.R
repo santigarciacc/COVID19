@@ -8,7 +8,7 @@ filtering_data_covid19 <-
                          "GBR", "IRN", "MEX")) {
     
     # Check if all countries are allowed
-    if (any(countries %in% raw_data$countries)) {
+    if (!all(countries %in% raw_data$countryterritoryCode)) {
       
       stop(paste("Sorry, some of the country codes is wrong",
                  "or the country is not currently available"))
@@ -64,17 +64,27 @@ filtering_data_covid19 <-
                                  "population" =
                       raw_data$popData2018[country_index[1]]))
 
+      # Providing the velocity of the growth (acceleration) of cases
       aux_acc_cases <- rev(rev(output_list[[c]]$covid_data$vel_cases)[-1]) /
         output_list[[c]]$covid_data$vel_cases[-1]
-      
       output_list[[c]]$covid_data$acc_cases <-
         c(ifelse(is.nan(aux_acc_cases), 0, aux_acc_cases - 1), 0)
-   
+      
+      # Removing also Inf values (fixing as 0)
+      output_list[[c]]$covid_data$acc_cases <-
+        ifelse(is.infinite(output_list[[c]]$covid_data$acc_cases),
+               0, output_list[[c]]$covid_data$acc_cases)
+               
+      # Providing the velocity of the growth (acceleration) of deaths
       aux_acc_deaths <- rev(rev(output_list[[c]]$covid_data$vel_deaths)[-1]) /
         output_list[[c]]$covid_data$vel_deaths[-1]
-      
       output_list[[c]]$covid_data$acc_deaths <-
         c(ifelse(is.nan(aux_acc_deaths), 0, aux_acc_deaths - 1), 0)
+      
+      # Removing also Inf values (fixing as 0)
+      output_list[[c]]$covid_data$acc_deaths <-
+        ifelse(is.infinite(output_list[[c]]$covid_data$acc_deaths),
+               0, output_list[[c]]$covid_data$acc_deaths)
     }
     
     # Output
@@ -92,7 +102,7 @@ extracting_ECDC_covid19 <-
            dates = as.Date(c("2019-12-31", format(Sys.time(), "%Y-%m-%d"))),
            countries = c("ESP", "ITA", "DEU", "FRA", "CHN", "KOR", "USA",
                          "GBR", "IRN"), save_local = FALSE) {
-    
+  
     # Downloading the dataset from the url to our local as a temporary file
     GET(source, http_auth, write_disk(temp_file <-
                                      tempfile(fileext = file_format)))
@@ -142,6 +152,7 @@ comparative_countries <- function(data, log_10 = FALSE, n_hab = 1,
   n_countries <- length(data$filter_countries)
   
   # If log_10 == TRUE, we convert all data to logarithmic scale
+  rel_pop <- rep(0, n_countries)
   for (i in 1:n_countries) {
  
     if (log_10) {
@@ -172,12 +183,8 @@ comparative_countries <- function(data, log_10 = FALSE, n_hab = 1,
     }
     
     # Relative population
-    rel_pop <- ifelse(is.logical(n_hab), 1,
-                      data$filter_data[[i]]$population / n_hab)
-    
-    data$filter_data[[i]]$covid_data[ , 2:5] <-
-      data$filter_data[[i]]$covid_data[, 2:5] / rel_pop
-  
+    rel_pop[i] <- ifelse(is.logical(n_hab), 1,
+                         data$filter_data[[i]]$population / n_hab)
   }
   
   # Markers for then plotting
@@ -193,7 +200,6 @@ comparative_countries <- function(data, log_10 = FALSE, n_hab = 1,
                     "triangle-se-open")
   
   # Number of countries should be at most the numbers of different markers
-  max_countries <- length(plot_markers)
   if (length(plot_markers) < length(data$filter_countries)) {
     
     data$filter_countries[(max_countries + 1):
@@ -219,8 +225,9 @@ comparative_countries <- function(data, log_10 = FALSE, n_hab = 1,
     
     # If aligned_cases or aligned_deaths are TRUE, we just consider the cases
     # when the cumulative cases (deaths, resp.) is greater than 100 (10, resp.)
-    n_cases[i] <- ifelse(aligned_cases,
-                         sum(data$filter_data[[i]]$covid_data$cum_cases > 100),
+    n_cases[i] <-
+      ifelse(aligned_cases,
+             sum(data$filter_data[[i]]$covid_data$cum_cases > 100),
                          ifelse(aligned_deaths,
                                 sum(data$filter_data[[i]]$covid_data$cum_cases > 10),
                                 length(data$filter_data[[i]]$covid_data$cum_cases)))
@@ -234,24 +241,24 @@ comparative_countries <- function(data, log_10 = FALSE, n_hab = 1,
         -((n_cases[i] + 1):
             length(data$filter_data[[i]]$covid_data$cum_cases)), ]
     
-    assign(paste0("ECDC_", data$filter_countries[i]), data$filter_data[[i]])
+    assign(paste0("ECDC_", data$filter_countries[i]),
+           data$filter_data[[i]])
     
     len_max <- max(len_max, length(data$filter_data[[i]]$covid_data$cum_cases))
-    
   }
   
-  fig1 <- fig2 <- fig3 <- fig4 <- fig5 <- fig6 <- fig7 <- NULL
+  fig1 <- fig2 <- fig3 <- fig4 <- fig5 <- fig6 <- fig7 <- fig8 <- fig9 <- NULL
   if (plot_cases) {
     
     for (i in 1:length(data$filter_countries)) {
-      
       if (i == 1) {
         
         fig1 <-
           plot_ly(data =
                     get(paste0("ECDC_",
                                data$filter_countries[i]))$covid_data,
-                  x = ~date, y = ~cases,
+                  x = ~date,
+                  y = data$filter_data[[i]]$covid_data$cases / rel_pop[i],
                   name = data$filter_countries[i],
                   colors = brewer.pal(n = length(data$filter_countries),
                                       name = "RdBu"),
@@ -265,7 +272,8 @@ comparative_countries <- function(data, log_10 = FALSE, n_hab = 1,
         fig1 <-
           fig1 %>% add_trace(data = get(paste0("ECDC_",
                                                data$filter_countries[i]))$covid_data,
-                             x = ~date, y = ~cases,
+                             x = ~date,
+                             y = data$filter_data[[i]]$covid_data$cases / rel_pop[i],
                              name = data$filter_countries[i],
                              type = 'scatter', mode = 'markers+lines',
                              colors =
@@ -308,7 +316,8 @@ comparative_countries <- function(data, log_10 = FALSE, n_hab = 1,
           plot_ly(data =
                     get(paste0("ECDC_",
                                data$filter_countries[i]))$covid_data,
-                  x = ~date, y = ~deaths,
+                  x = ~date, 
+                  y = data$filter_data[[i]]$covid_data$deaths / rel_pop[i],
                   name = data$filter_countries[i],
                   colors = brewer.pal(n = length(data$filter_countries),
                                       name = "RdBu"),
@@ -322,7 +331,8 @@ comparative_countries <- function(data, log_10 = FALSE, n_hab = 1,
         fig2 <-
           fig2 %>% add_trace(data = get(paste0("ECDC_",
                                                data$filter_countries[i]))$covid_data,
-                             x = ~date, y = ~deaths,
+                             x = ~date,
+                             y = data$filter_data[[i]]$covid_data$deaths / rel_pop[i],
                              name = data$filter_countries[i],
                              type = 'scatter', mode = 'markers+lines',
                              colors =
@@ -366,7 +376,8 @@ comparative_countries <- function(data, log_10 = FALSE, n_hab = 1,
           plot_ly(data =
                     get(paste0("ECDC_",
                                data$filter_countries[i]))$covid_data,
-                  x = ~date, y = ~cum_cases,
+                  x = ~date,
+                  y = data$filter_data[[i]]$covid_data$cum_cases / rel_pop[i],
                   xaxis = list(range =
                                  list(min(dates_allowed),
                                       format(Sys.time(), "%Y-%m-%d"))),
@@ -383,7 +394,8 @@ comparative_countries <- function(data, log_10 = FALSE, n_hab = 1,
         fig3 <-
           fig3 %>% add_trace(data = get(paste0("ECDC_",
                                                data$filter_countries[i]))$covid_data,
-                             x = ~date, y = ~cum_cases,
+                             x = ~date,
+                             y = data$filter_data[[i]]$covid_data$cum_cases / rel_pop[i],
                              name = data$filter_countries[i],
                              type = 'scatter', mode = 'markers+lines',
                              colors =
@@ -425,7 +437,8 @@ comparative_countries <- function(data, log_10 = FALSE, n_hab = 1,
           plot_ly(data =
                     get(paste0("ECDC_",
                                data$filter_countries[i]))$covid_data,
-                  x = ~date, y = ~cum_deaths,
+                  x = ~date, 
+                  y = data$filter_data[[i]]$covid_data$cum_deaths / rel_pop[i],
                   name = data$filter_countries[i],
                   colors = brewer.pal(n = length(ECDC_data$filter_countries),
                                       name = "RdBu"),
@@ -439,7 +452,8 @@ comparative_countries <- function(data, log_10 = FALSE, n_hab = 1,
         fig4 <-
           fig4 %>% add_trace(data = get(paste0("ECDC_",
                                                data$filter_countries[i]))$covid_data,
-                             x = ~date, y = ~cum_deaths,
+                             x = ~date, 
+                             y = data$filter_data[[i]]$covid_data$cum_deaths / rel_pop[i],
                              name = data$filter_countries[i],
                              type = 'scatter', mode = 'markers+lines',
                              colors =
@@ -585,66 +599,182 @@ comparative_countries <- function(data, log_10 = FALSE, n_hab = 1,
                           title = 'dates', zeroline = FALSE))
 
   }
-#   
-#   if (plot_mort_rate) {
-#     
-#     for (i in 1:length(ECDC_data$filter_countries)) {
-#       
-#       if (i == 1) {
-#         
-#         fig7 <-
-#           plot_ly(data =
-#                     get(paste0("ECDC_",
-#                                ECDC_data$filter_countries[i]))$covid_data,
-#                   x = ~date, y = ~mortality_rate,
-#                   name = ECDC_data$filter_countries[i],
-#                   colors = brewer.pal(n = length(ECDC_data$filter_countries),
-#                                       name = "RdBu"),
-#                   type = 'scatter', mode = 'markers+lines',
-#                   marker = list(symbol = rand_markers[i], size = 8.5,
-#                                 line = list(width = 2)))
-#         
-#       }
-#       else {
-#         
-#         fig7 <-
-#           fig7 %>% add_trace(data = get(paste0("ECDC_",
-#                                                ECDC_data$filter_countries[i]))$covid_data,
-#                              x = ~date, y = ~mortality_rate,
-#                              name = ECDC_data$filter_countries[i],
-#                              type = 'scatter', mode = 'markers+lines',
-#                              colors =
-#                                brewer.pal(n = length(ECDC_data$filter_countries),
-#                                           name = "RdBu"),
-#                              marker =
-#                                list(symbol = rand_markers[i], size = 8.5,
-#                                     line = list(width = 2)))
-#         
-#       }
-#     }
-#   
-#   # Layout details
-#   fig7 <- fig7 %>%
-#     layout(title = 
-#              ifelse(aligned,
-#                     'Mortality rate (aligned, day 0 = cumul. infected > 100',
-#                     ifelse(threshold,
-#                            'Mortality rate since cumulative infected > 100',
-#                            'Mortality rate')),
-#            yaxis = list(title = 'Mortality rate', zeroline = FALSE),
-#            xaxis = list(range = 
-#                           ifelse(aligned, 0:(len_max - 1),
-#                                  list(min(dates_allowed),
-#                                       format(Sys.time(), "%Y-%m-%d"))),
-#                         title = 'dates', zeroline = FALSE))
-#   
-# }
+  
+  
+  if(plot_a_cases) {
+    
+    
+    for (i in 1:length(data$filter_countries)) {
+      
+      if (i == 1) {
+        
+        fig7 <-
+          plot_ly(data =
+                    get(paste0("ECDC_",
+                               data$filter_countries[i]))$covid_data,
+                  x = ~date, y = ~acc_cases,
+                  name = data$filter_countries[i],
+                  colors = brewer.pal(n = length(data$filter_countries),
+                                      name = "RdBu"),
+                  type = 'scatter', mode = 'markers+lines',
+                  marker = list(symbol = rand_markers[i], size = 8.5,
+                                line = list(width = 2)))
+        
+      }
+      else {
+        
+        fig7 <-
+          fig7 %>% add_trace(data = get(paste0("ECDC_",
+                                               data$filter_countries[i]))$covid_data,
+                             x = ~date, y = ~acc_cases,
+                             name = ECDC_data$filter_countries[i],
+                             type = 'scatter', mode = 'markers+lines',
+                             colors =
+                               brewer.pal(n = length(data$filter_countries),
+                                          name = "RdBu"),
+                             marker =
+                               list(symbol = rand_markers[i], size = 8.5,
+                                    line = list(width = 2)))
+        
+      }
+    }
+    
+    # Layout details
+    aux_title <- "Acceleration (velocity of % daily growth) of cases"
+    fig7 <- fig7 %>%
+      layout(title =
+               ifelse(aligned_cases,
+                      paste(aux_title, "(aligned, day 0 = cumul. cases > 100)"),
+                      ifelse(aligned_deaths,
+                             paste(aux_title, "(aligned, day 0 = cumul. deaths > 10)"),
+                             aux_title)),
+             yaxis = list(title = paste("new", aux_title), zeroline = FALSE),
+             xaxis = list(range =
+                            ifelse(aligned_cases | aligned_deaths,
+                                   0:(len_max - 1),
+                                   list(min(dates_allowed),
+                                        format(Sys.time(), "%Y-%m-%d"))),
+                          title = 'dates', zeroline = FALSE))
+    
+  }
+  
+  if(plot_a_deaths) {
+    
+    for (i in 1:length(data$filter_countries)) {
+      
+      if (i == 1) {
+        
+        fig8 <-
+          plot_ly(data =
+                    get(paste0("ECDC_",
+                               data$filter_countries[i]))$covid_data,
+                  x = ~date, y = ~acc_deaths,
+                  name = data$filter_countries[i],
+                  colors = brewer.pal(n = length(data$filter_countries),
+                                      name = "RdBu"),
+                  type = 'scatter', mode = 'markers+lines',
+                  marker = list(symbol = rand_markers[i], size = 8.5,
+                                line = list(width = 2)))
+        
+      }
+      else {
+        
+        fig8 <-
+          fig8 %>% add_trace(data = get(paste0("ECDC_",
+                                               data$filter_countries[i]))$covid_data,
+                             x = ~date, y = ~acc_deaths,
+                             name = data$filter_countries[i],
+                             type = 'scatter', mode = 'markers+lines',
+                             colors =
+                               brewer.pal(n = length(ECDC_data$filter_countries),
+                                          name = "RdBu"),
+                             marker =
+                               list(symbol = rand_markers[i], size = 8.5,
+                                    line = list(width = 2)))
+        
+      }
+    }
+    
+    # Layout details
+    aux_title <- "Acceleration (velocity of % daily growth) of deaths"
+    fig8 <- fig8 %>%
+      layout(title =
+               ifelse(aligned_cases,
+                      paste(aux_title, "(aligned, day 0 = cumul. cases > 100)"),
+                      ifelse(aligned_deaths,
+                             paste(aux_title, "(aligned, day 0 = cumul. deaths > 10)"),
+                             aux_title)),
+             yaxis = list(title = paste("new", aux_title), zeroline = FALSE),
+             xaxis = list(range =
+                            ifelse(aligned_cases | aligned_deaths,
+                                   0:(len_max - 1),
+                                   list(min(dates_allowed),
+                                        format(Sys.time(), "%Y-%m-%d"))),
+                          title = 'dates', zeroline = FALSE))
+    
+  }
+  
+  if (plot_mort_rate) {
+
+    for (i in 1:length(data$filter_countries)) {
+
+      if (i == 1) {
+
+        fig9 <-
+          plot_ly(data =
+                    get(paste0("ECDC_",
+                               data$filter_countries[i]))$covid_data,
+                  x = ~date, y = ~mort_rate,
+                  name = data$filter_countries[i],
+                  colors = brewer.pal(n = length(data$filter_countries),
+                                      name = "RdBu"),
+                  type = 'scatter', mode = 'markers+lines',
+                  marker = list(symbol = rand_markers[i], size = 8.5,
+                                line = list(width = 2)))
+
+      }
+      else {
+
+        fig9 <-
+          fig9 %>% add_trace(data = get(paste0("ECDC_",
+                                               data$filter_countries[i]))$covid_data,
+                             x = ~date, y = ~mort_rate,
+                             name = data$filter_countries[i],
+                             type = 'scatter', mode = 'markers+lines',
+                             colors =
+                               brewer.pal(n = length(data$filter_countries),
+                                          name = "RdBu"),
+                             marker =
+                               list(symbol = rand_markers[i], size = 8.5,
+                                    line = list(width = 2)))
+
+      }
+    }
+
+    # Layout details
+    aux_title <- "Mortality rates (cumulative deaths / cumulative cases)"
+    fig9 <- fig9 %>%
+      layout(title =
+               ifelse(aligned_cases,
+                      paste(aux_title, "(aligned, day 0 = cumul. cases > 100)"),
+                      ifelse(aligned_deaths,
+                             paste(aux_title, "(aligned, day 0 = cumul. deaths > 10)"),
+                             aux_title)),
+             yaxis = list(title = paste("new", aux_title), zeroline = FALSE),
+             xaxis = list(range =
+                            ifelse(aligned_cases | aligned_deaths,
+                                   0:(len_max - 1),
+                                   list(min(dates_allowed),
+                                        format(Sys.time(), "%Y-%m-%d"))),
+                          title = 'dates', zeroline = FALSE))
+  }
   
   # Output figures
   return(list("fig_cases" = fig1, "fig_deaths" = fig2,
               "fig_cum_cases" = fig3, "fig_cum_deaths" = fig4,
               "fig_vel_cases" = fig5, "fig_vel_deaths" = fig6,
-              "fig_mort_rate" = fig7))
+              "fig_acc_cases" = fig7, "fig_acc_deaths" = fig8,
+              "fig_mort_rate" = fig9))
 }
 
 
