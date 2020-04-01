@@ -29,8 +29,8 @@ source('./aux_functions.R')
 countries <- c("ESP", "ITA", "USA", "MEX","ECU", "ARG", "BRA",
                "CHN") 
 
-# LOG_10: Do you want data in the original scle or in the log_10 scale?
-log_10 <- FALSE # If log_10 <- TRUE, cases and deaths are plotted in log_10 scale
+# LOG: Do you want data in the original scle or in the log scale?
+log <- FALSE # If log <- TRUE, cases and deaths are plotted in log_10 scale
 
 # DATES: Since when do you want to analysed?
 from_date <- "2019-12-31" # Please, modify with a date in format "YYYY-mm-dd"
@@ -113,7 +113,7 @@ for (i in 1:length(ECDC_data$filter_data)) {
 ## Example: writting graphics_countries$fig_cum_deaths plots cumulative deaths
 ##
 graphics_countries <-
-  comparative_countries(ECDC_data, log_10 = log_10,
+  comparative_countries(ECDC_data, log = log,
                         n_hab, aligned_cases = aligned_cases,
                         aligned_deaths = aligned_deaths,
                         plot_cases = plot_cases, plot_deaths = plot_deaths,

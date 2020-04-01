@@ -138,7 +138,7 @@ extracting_ECDC_covid19 <-
 ## PLOTS
 ##
 
-comparative_countries <- function(data, log_10 = FALSE, n_hab = 1,
+comparative_countries <- function(data, log = FALSE, n_hab = 1,
                                   aligned_cases = FALSE, aligned_deaths = FALSE,
                                   plot_cases = TRUE, plot_deaths = TRUE,
                                   plot_cum_cases = TRUE, plot_cum_deaths = TRUE,
@@ -151,11 +151,11 @@ comparative_countries <- function(data, log_10 = FALSE, n_hab = 1,
   # Number of countries to be compared and number of variables (column)
   n_countries <- length(data$filter_countries)
   
-  # If log_10 == TRUE, we convert all data to logarithmic scale
+  # If log == TRUE, we convert all data to logarithmic scale
   rel_pop <- rep(0, n_countries)
   for (i in 1:n_countries) {
  
-    if (log_10) {
+    if (log) {
       
       data$filter_data[[i]]$covid_data[ , 2:5] <-
         lapply(log(data$filter_data[[i]]$covid_data[, 2:5]),
@@ -247,6 +247,7 @@ comparative_countries <- function(data, log_10 = FALSE, n_hab = 1,
     len_max <- max(len_max, length(data$filter_data[[i]]$covid_data$cum_cases))
   }
   
+  # If figures are not plotted, figures are NULL
   fig1 <- fig2 <- fig3 <- fig4 <- fig5 <- fig6 <- fig7 <- fig8 <- fig9 <- NULL
   if (plot_cases) {
     
@@ -287,16 +288,17 @@ comparative_countries <- function(data, log_10 = FALSE, n_hab = 1,
     }
     
     # Layout details
-    aux_title <- ifelse(log_10, "Daily log10 cases", "Daily cases")
+    aux_title <- ifelse(log, "Daily log cases", "Daily cases")
     aux_title <- ifelse(is.logical(n_hab), aux_title,
                         paste(aux_title, "per each", n_hab, "people"))
     fig1 <- fig1 %>%
+      
       layout(title =
                ifelse(aligned_cases,
                       paste(aux_title, "(aligned, day 0 = cumul. cases > 100)"),
                       ifelse(aligned_deaths,
-                      paste(aux_title, "(aligned, day 0 = cumul. deaths > 10)"),
-                      aux_title)),
+                             paste(aux_title, "(aligned, day 0 = cumul. deaths > 10)"),
+                             aux_title)),
              yaxis = list(title = paste("new", aux_title), zeroline = FALSE),
              xaxis = list(range =
                             ifelse(aligned_cases | aligned_deaths,
@@ -304,6 +306,7 @@ comparative_countries <- function(data, log_10 = FALSE, n_hab = 1,
                                    list(min(dates_allowed),
                                         format(Sys.time(), "%Y-%m-%d"))),
                           title = 'dates', zeroline = FALSE))
+     
 
   }
   
@@ -346,10 +349,11 @@ comparative_countries <- function(data, log_10 = FALSE, n_hab = 1,
     }
     
     # Layout details
-    aux_title <- ifelse(log_10, "Daily log10 deaths", "Daily deaths")
+    aux_title <- ifelse(log, "Daily log deaths", "Daily deaths")
     aux_title <- ifelse(is.logical(n_hab), aux_title,
                         paste(aux_title, "per each", n_hab, "people"))
     fig2 <- fig2 %>%
+      
       layout(title =
                ifelse(aligned_cases,
                       paste(aux_title, "(aligned, day 0 = cumul. cases > 100)"),
@@ -412,6 +416,7 @@ comparative_countries <- function(data, log_10 = FALSE, n_hab = 1,
     aux_title <- paste("Cumulative cases", ifelse(is.logical(n_hab), "",
                         paste("per each", n_hab, "people")))
     fig3 <- fig3 %>%
+      
       layout(title =
                ifelse(aligned_cases,
                       paste(aux_title, "(aligned, day 0 = cumul. cases > 100)"),
@@ -471,6 +476,7 @@ comparative_countries <- function(data, log_10 = FALSE, n_hab = 1,
                        ifelse(is.logical(n_hab), "",
                               paste("per each", n_hab, "people")))
     fig4 <- fig4 %>%
+      
       layout(title =
                ifelse(aligned_cases,
                       paste(aux_title, "(aligned, day 0 = cumul. cases > 100)"),
@@ -527,7 +533,7 @@ comparative_countries <- function(data, log_10 = FALSE, n_hab = 1,
 
     # Layout details
     aux_title <- "velocity of growth (% daily growth) of cases"
-    fig5 <- fig5 %>%
+    fig5 <- fig5 %>% 
       layout(title =
                ifelse(aligned_cases,
                       paste(aux_title, "(aligned, day 0 = cumul. cases > 100)"),
@@ -584,6 +590,7 @@ comparative_countries <- function(data, log_10 = FALSE, n_hab = 1,
     # Layout details
     aux_title <- "velocity of growth (% daily growth) of deaths"
     fig6 <- fig6 %>%
+      
       layout(title =
                ifelse(aligned_cases,
                       paste(aux_title, "(aligned, day 0 = cumul. cases > 100)"),
@@ -642,6 +649,7 @@ comparative_countries <- function(data, log_10 = FALSE, n_hab = 1,
     # Layout details
     aux_title <- "Acceleration (velocity of % daily growth) of cases"
     fig7 <- fig7 %>%
+      
       layout(title =
                ifelse(aligned_cases,
                       paste(aux_title, "(aligned, day 0 = cumul. cases > 100)"),
@@ -698,6 +706,7 @@ comparative_countries <- function(data, log_10 = FALSE, n_hab = 1,
     # Layout details
     aux_title <- "Acceleration (velocity of % daily growth) of deaths"
     fig8 <- fig8 %>%
+      
       layout(title =
                ifelse(aligned_cases,
                       paste(aux_title, "(aligned, day 0 = cumul. cases > 100)"),
@@ -754,6 +763,7 @@ comparative_countries <- function(data, log_10 = FALSE, n_hab = 1,
     # Layout details
     aux_title <- "Mortality rates (cumulative deaths / cumulative cases)"
     fig9 <- fig9 %>%
+      
       layout(title =
                ifelse(aligned_cases,
                       paste(aux_title, "(aligned, day 0 = cumul. cases > 100)"),
