@@ -246,13 +246,38 @@ Showing the **graphics asked** (note that if some of the flags were `FALSE`, the
 ```R
 graphics_countries$fig_cases # Plotting the daily cases for each selected country
 ```
+
+Daily cases aligned by cases per each 1 millon habitants, 5th April 2020:
+
+![Daily cases aligned by cases per each 1 millon habitants, 5th April 2020](https://github.com/JavierAlvarezLiebana/COVID19/blob/master/daily_cases.jpg)
+
+
 ```R
 graphics_countries$fig_deaths # Plotting the daily deaths for each selected country
 ```
 
+Daily deaths aligned by cases per each 1 millon habitants, 5th April 2020:
+
+![Daily deaths aligned by cases per each 1 millon habitants, 5th April 2020](https://github.com/JavierAlvarezLiebana/COVID19/blob/master/daily_deaths.jpg)
+
+
 ```R
 graphics_countries$fig_cum_cases # Plotting the cumulative cases for each selected country
 ```
+
+Cum cases aligned by cases per each 1 millon habitants, 5th April 2020:
+
+![Cum cases aligned by cases per each 1 millon habitants, 5th April 2020](https://github.com/JavierAlvarezLiebana/COVID19/blob/master/cum_cases.jpg)
+
+
+**Note that each figure is interactive and it can be enlarged just selecting the zoom area**
+
+Cum cases aligned by cases per each 1 millon habitants, 5th April 2020, after zoom:
+
+![Cum cases aligned by cases per each 1 millon habitants, 5th April 2020](https://github.com/JavierAlvarezLiebana/COVID19/blob/master/zoom.jpg)
+
+
+
 
 ```R
 graphics_countries$fig_cum_deaths # Plotting the cumulative deaths for each selected country
