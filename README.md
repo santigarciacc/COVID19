@@ -123,6 +123,121 @@ plot_dev_by_continents <- TRUE # A graphic about the data related to their conti
 
 ### Examples of using the datasets (after executing the code):
 
+#### Raw ECDC data:
+
+Loading the **dataset (data frame) with the raw data** directly from the [repository of ECDC]. Note that the data is chronologically sorted, the newest on top:
+
+```R
+ECDC_data$raw_data
+```
+
+
+Loading the **set of code countries** (a vector) for all available countries:
+
+```R
+ECDC_data$all_countries
+```
+
+Loading the **set of code countries** (a vector) for the **filtered** countries asked before in the `countries` variable:
+
+```R
+ECDC_data$filter_countries
+```
+
+#### Filtered ECDC data by countries:
+
+Loading the **dataset (data frame) with the raw data** directly from the [repository of ECDC], filtered by countries in `countries` and dates in `dates`. Note that the data is chronologically sorted, the newest on top. For using the i-th country indicated in `countries` variable, please write
+
+
+```R
+ECDC_data$filter_data[[i]]$country # Code country for the i-th country asked in the variable "countries"
+ECDC_data$filter_data[[i]]$continent # Continent for the i-th country asked in the variable "countries"
+ECDC_data$filter_data[[i]]$population # Population (2018) for the i-th country asked in the variable "countries"
+ECDC_data$filter_data[[i]]$covid_data # covid19 data for the i-th country asked in the variable "countries"
+```
+
+**Files** (data frame) for **each country** have been also created:
+
+```R
+ECDC_ESP # Data for Spain
+ECDC_ESP$country # Code country of Spain
+ECDC_ESP$continent # Continent of Spain 
+ECDC_ESP$population # Population of Spain
+ECDC_ESP$covid_data # Covid19 data of Spain
+
+ECDC_ESP$covid_data$date # Dates
+ECDC_ESP$covid_data$cases # Daily cases
+ECDC_ESP$covid_data$cum_cases # Cumulative cases
+ECDC_ESP$covid_data$deaths # Daily deaths
+ECDC_ESP$covid_data$cum_deaths # Cumulative deaths
+ECDC_ESP$covid_data$vel_cases # % daily growth of cases
+ECDC_ESP$covid_data$vel_deaths # % daily growth of deaths
+ECDC_ESP$covid_data$acc_cases # % daily growth of growth (acceleration) of cases
+ECDC_ESP$covid_data$acc_deaths # % daily growth of growth (acceleration) of deaths
+ECDC_ESP$covid_data$mort_rate # Daily mortality rate
+
+# Relative errors respect to the continent data: (country - continent)/continent
+ECDC_ESP$covid_data$dev_cont_cases 
+ECDC_ESP$covid_data$dev_cont_cum_cases
+ECDC_ESP$covid_data$dev_cont_deaths
+ECDC_ESP$covid_data$dev_cont_cum_deaths
+
+```
+
+
+
+#### Raw ECDC data by continents:
+
+Loading the **dataset (data frame) with the raw data** directly from the [repository of ECDC], but grouped by continents Note that the data is chronologically sorted, the newest on top:
+
+```R
+ECDC_data$data_by_continents[[1]] # Europe
+
+ECDC_data$data_by_continents[[1]]$population # Population of Europe
+ECDC_data$data_by_continents[[1]]$continent # Name of continent
+ECDC_data$data_by_continents[[1]]$covid_data # Covid19 data of Europe
+```
+
+```R
+ECDC_data$data_by_continents[[2]] # Asia
+
+ECDC_data$data_by_continents[[2]]$population # Population of Asia
+ECDC_data$data_by_continents[[2]]$continent # Name of continent
+ECDC_data$data_by_continents[[2]]$covid_data # Covid19 data of Asia
+```
+
+```R
+ECDC_data$data_by_continents[[3]] # Africa
+
+ECDC_data$data_by_continents[[3]]$population # Population of Africa
+ECDC_data$data_by_continents[[3]]$continent # Name of continent
+ECDC_data$data_by_continents[[3]]$covid_data # Covid19 data of Africa
+```
+
+```R
+ECDC_data$data_by_continents[[4]] # Oceania
+
+ECDC_data$data_by_continents[[4]]$population # Population of Oceania
+ECDC_data$data_by_continents[[4]]$continent # Name of continent
+ECDC_data$data_by_continents[[4]]$covid_data # Covid19 data of Oceania
+```
+
+```R
+ECDC_data$data_by_continents[[5]] # South America
+
+ECDC_data$data_by_continents[[5]]$population # Population of South America
+ECDC_data$data_by_continents[[5]]$continent # Name of continent
+ECDC_data$data_by_continents[[5]]$covid_data # Covid19 data of South America
+```
+
+```R
+ECDC_data$data_by_continents[[6]] # North and central America (and Caribe region)
+
+ECDC_data$data_by_continents[[6]]$population # Population of North and central America (and Caribe region)
+ECDC_data$data_by_continents[[6]]$continent # Name of continent
+ECDC_data$data_by_continents[[6]]$covid_data # Covid19 data of North and central America (and Caribe region)
+```
+
 
 ### Examples of using the graphics (after executing the code):
 
