@@ -272,8 +272,6 @@ Cum cases aligned by cases per each 1 millon habitants, 5th April 2020:
 
 **Note that each figure is interactive and it can be enlarged just selecting the zoom area**
 
-Cum cases aligned by cases per each 1 millon habitants, 5th April 2020, after zoom:
-
 ![Cum cases aligned by cases per each 1 millon habitants, 5th April 2020](https://github.com/JavierAlvarezLiebana/COVID19/blob/master/zoom.jpg)
 
 
