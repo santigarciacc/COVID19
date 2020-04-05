@@ -241,27 +241,58 @@ ECDC_data$data_by_continents[[6]]$covid_data # Covid19 data of North and central
 
 ### Examples of using the graphics (after executing the code):
 
-If you write in the console
+Showing the **graphics asked** (note that if some of the flags were `FALSE`, then the variable `graphics_countries`will be `NULL`for these graphic):
 
-- ECDC_data$raw_data: raw data (all countries, all dates).
+```R
+graphics_countries$fig_cases # Plotting the daily cases for each selected country
+```
+```R
+graphics_countries$fig_deaths # Plotting the daily deaths for each selected country
+```
 
-- ECDC_ESP$covid_data: covid19 data of Spain, from the ECDC database, between the selected dates, updated just in time of the execution.
+```R
+graphics_countries$fig_cum_cases # Plotting the cumulative cases for each selected country
+```
 
-- ECDC_data$all_countries: all countries (their codes) included in the database.
+```R
+graphics_countries$fig_cum_deaths # Plotting the cumulative deaths for each selected country
+```
 
-- ECDC_data$filter_countries: asked country codes
+```R
+graphics_countries$fig_vel_cases # Plotting the velocity of cases for each selected country
+```
 
-- ECDC_data$filter_data[[i]]: filtered data (by countris and dates) of the i-th country asked (included in ECDC_data$filter_countries).
+```R
+graphics_countries$fig_vel_deaths # Plotting the velocity of deaths for each selected country
+```
 
-- ECDC_ESP$country and ECDC_ITA$country # Country codes (in this case "ESP" and "ITA", resp.)
+```R
+graphics_countries$fig_acc_cases # Plotting the acceleration of cases for each selected country
+```
 
-- ECDC_ESP$population: population in January 2019 from the World Bank database
+```R
+graphics_countries$fig_acc_deaths # Plotting the acceleration of deaths for each selected country
+```
 
-- graphics_countries$fig_cum_deaths: plots cumulative deaths
+```R
+graphics_countries$fig_mort_rate # Plotting the daily mortality rate for each selected country
+```
 
-- graphics_countries$fig_vel_cases: plots the % daily growth of cases 
+```R
+graphics_countries$fig_dev_cont_cases # Plotting relative deviations (resp. to their continents) of cases for each selected country
+```
 
-- graphics_countries$ + tab key: a menu will appear with the different graphics available.
+```R
+graphics_countries$fig_dev_cont_deaths # Plotting relative deviations (resp. to their continents) of deaths for each selected country
+```
+
+```R
+graphics_countries$fig_dev_cont_cum_cases # Plotting relative deviations (resp. to their continents) of cum cases for each selected country
+```
+
+```R
+graphics_countries$fig_dev_cont_cum_deaths # Plotting relative deviations (resp. to their continents) of deaths for each selected country
+```
 
 
 
