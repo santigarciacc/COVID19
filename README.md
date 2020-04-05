@@ -1,6 +1,6 @@
 # COVID19
 
-[cran]: https://cran.r-project.org/ "green means go!"
+[cran]: https://www.r-pkg.org/badges/version/zeallot"
 ![alt text][cran]
 
 
@@ -17,11 +17,11 @@ The code available is composed of **three code files and one dataset**:
 - **main_comparing_countries_ECDCdata.R**: code for extracting, filtering and plotting the data. **IMPORTANT**: this code is the only piece of code that the non-expertised user should execute and open.
 
 
-### Installation
+### Installation (please, check before question to be asked below):
 
-#### Option 1: R studio:
+#### Option 1: R studio (recommended):
 
-**Download all files** of ![repository](https://github.com/JavierAlvarezLiebana/COVID19/tree/master) in the same folder of your computer and **just open the** [main file](https://github.com/JavierAlvarezLiebana/COVID19/blob/master/main_comparing_countries_ECDCdata)
+**Download all files** of [repository](https://github.com/JavierAlvarezLiebana/COVID19/tree/master) in the same folder of your computer and **just open the** [main file](https://github.com/JavierAlvarezLiebana/COVID19/blob/master/main_comparing_countries_ECDCdata)
 
 ![Head of code. Source on save must be ticked](https://github.com/JavierAlvarezLiebana/COVID19/blob/master/head_code_source_on_save.jpg)
 
@@ -29,14 +29,14 @@ Note that at the beginning of the [main file](https://github.com/JavierAlvarezLi
 
 #### Option 2: classical R terminal:
 
-You can also execute in the classical terminal of R by writting (note that "your_path_of_files" is the path of your computer where you have saved the files)
+You can also execute in the classical terminal of R by writting (note that `your_path_of_files` should b the path of your computer where you have saved the files)
  
 ```R
 source('your_path_of_files/main_comparing_countries_ECDCdata.R')
 ```
 
 
-### Questions to be asked:
+### Questions to be asked before executing:
 
 Please, **before executing, read the questions asked** at the beginning of the [main file](https://github.com/JavierAlvarezLiebana/COVID19/blob/master/main_comparing_countries_ECDCdata.R): 
 
@@ -87,7 +87,41 @@ aligned_deaths <- FALSE
 perc_pop <- 0.000001 # 0.0001 % of population of each country
 ```
 
-**Examples of using (after executing the code)**:
+#### Flags for plotting:
+
+Which graphics do you want to be plotted?
+
+- **plot_cases**: do you want a graphic plotting the **daily cases** `TRUE` or not `FALSE`?
+- **plot_deaths**: do you want a graphic plotting the **daily deaths** `TRUE` or not `FALSE`?
+- **plot_cum_cases**: do you want a graphic plotting the **cum cases** `TRUE` or not `FALSE`?
+- **plot_cum_deaths**: do you want a graphic plotting the **cum deaths** `TRUE` or not `FALSE`?
+- **plot_morth_rate**: do you want a graphic plotting the **daily mortality rate** (cum deaths / cum cases) `TRUE` or not `FALSE`?
+- **plot_v_cases**: do you want a graphic plotting the **% growth (velocity) of cases** `TRUE` or not `FALSE`?
+- **plot_v_deaths**: do you want a graphic plotting the **% growth (velocity) of deaths** `TRUE` or not `FALSE`?
+- **plot_a_cases**: do you want a graphic plotting the **% growth of velocity (acceleration) of cases** `TRUE` or not `FALSE`?
+- **plot_a_deaths**: do you want a graphic plotting the **% growth of velocity (acceleration) of deaths** `TRUE` or not `FALSE`?
+- **plot_dev_by_continents**: do you want a graphic plotting the **cases and deaths (and their cumulatives) in comparison with their continets** (by habitants) `TRUE` or not `FALSE`?
+
+```R
+# PLOT_CASES, PLOT_DEATHS, PLOT_CUM_CASES, PLOT_CUM_DEATHS, PLOT_MORT_RATE
+plot_cases <- TRUE # A graphic about the daily cases? TRUE/FALSE
+plot_deaths <- TRUE # A graphic about the daily deaths? TRUE/FALSE
+plot_cum_cases <- TRUE # A graphic about the cum. cases? TRUE/FALSE
+plot_cum_deaths <- TRUE # A graphic about the cum. deaths? TRUE/FALSE
+plot_mort_rate <- TRUE # A graphic about the mortality rate (cum deaths / cum cases)? TRUE/FALSE
+
+# PLOT_V_CASES, PLOT_V_DEATHS, PLOT_A_CASES, PLOT_A_DEATHS
+plot_v_cases <- TRUE # A graphic about the % growth (velocity) of cases? TRUE/FALSE
+plot_v_deaths <- TRUE # A graphic about the % growth (velocity) of deaths? TRUE/FALSE
+plot_a_cases <- TRUE # A graphic about the % growth of velocity of cases (acceleration)? TRUE/FALSE
+plot_a_deaths <- TRUE # A graphic about the % growth of velocity of deaths (acceleration)? TRUE/FALSE
+plot_dev_by_continents <- TRUE # A graphic about the data related to their continents
+```
+
+### Examples of using the datasets (after executing the code):
+
+
+### Examples of using the graphics (after executing the code):
 
 If you write in the console
 
