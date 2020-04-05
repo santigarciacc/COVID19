@@ -1,6 +1,6 @@
 # COVID19
 
-[cran]: https://www.r-pkg.org/badges/version/zeallot"
+[cran]: https://www.r-pkg.org/badges/version/zeallot "green means go!"
 ![alt text][cran]
 
 
