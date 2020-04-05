@@ -1,5 +1,12 @@
 # COVID19
-**Scripts for describing, analysing and predicting the pandemic COVID19**
+
+[cran]: https://cran.r-project.org/ "green means go!"
+![alt text][cran]
+
+
+## Scripts for describing, analysing and predicting the pandemic COVID19
+
+### Description of files
 
 The code available is composed of **three code files and one dataset**:
 
@@ -10,21 +17,30 @@ The code available is composed of **three code files and one dataset**:
 - **main_comparing_countries_ECDCdata.R**: code for extracting, filtering and plotting the data. **IMPORTANT**: this code is the only piece of code that the non-expertised user should execute and open.
 
 
-**Download all files** in the same folder of your computer and **just open the main file (main_comparing_countries_ECDCdata.R)**
+### Installation
 
+#### Option 1: R studio:
 
-![Head of code. Source on save must be ticked](https://github.com/JavierAlvarezLiebana/COVID19/blob/master/head_code_source_on_save.jpg
-)
+**Download all files** of ![repository](https://github.com/JavierAlvarezLiebana/COVID19/tree/master) in the same folder of your computer and **just open the** [main file](https://github.com/JavierAlvarezLiebana/COVID19/blob/master/main_comparing_countries_ECDCdata)
 
-Note that at the beginning of the main code [main](https://github.com/JavierAlvarezLiebana/COVID19/blob/master/main_comparing_countries_ECDCdata.R), all **variables will be removed** and all packages will be attached. You can execute the whole code just pressing the **save button** in the R studio, making sure that the **option source on save is previously ticked**. You can also execute in the classical terminal of R by writting (note that "your_path_of_files" is the path of your computer where you have saved the files)
+![Head of code. Source on save must be ticked](https://github.com/JavierAlvarezLiebana/COVID19/blob/master/head_code_source_on_save.jpg)
 
+Note that at the beginning of the [main file](https://github.com/JavierAlvarezLiebana/COVID19/blob/master/main_comparing_countries_ECDCdata.R), all **variables will be removed** and all packages required will be attached. You can execute the whole code just pressing the **save button** in the R studio, making sure that the **option source on save is previously ticked**.
+
+#### Option 2: classical R terminal:
+
+You can also execute in the classical terminal of R by writting (note that "your_path_of_files" is the path of your computer where you have saved the files)
+ 
 ```R
 source('your_path_of_files/main_comparing_countries_ECDCdata.R')
 ```
 
-Please, **before executing, read the questions asked** at the beginning of [main](https://github.com/JavierAlvarezLiebana/COVID19/blob/master/main_comparing_countries_ECDCdata.R): 
 
-- **countries**: introduce the **code of the countries** that you want to plot (maximum 11 at the same time). Check the available codes in [countries_by_continents](https://github.com/JavierAlvarezLiebana/COVID19/blob/master/countries_by_cont.RData)
+### Questions to be asked:
+
+Please, **before executing, read the questions asked** at the beginning of the [main file](https://github.com/JavierAlvarezLiebana/COVID19/blob/master/main_comparing_countries_ECDCdata.R): 
+
+- **countries**: introduce the **code of the countries** that you want to plot (maximum 11 at the same time). Check the available codes in [countries by continents dataset](https://github.com/JavierAlvarezLiebana/COVID19/blob/master/countries_by_cont.RData)
 
 ```R
 countries <- c("ESP", "ITA", "FRA", "DEU", "PRT", "GBR", "USA",
