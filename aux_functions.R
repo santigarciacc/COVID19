@@ -672,7 +672,7 @@ comparative_countries <- function(data, log = FALSE, n_hab = 1,
         fig5 <-
           plot_ly(data = data$filter_data[[i]]$covid_data,
                   x = ~date,
-                  y = data$filter_data[[i]]$covid_data$vel_cases / rel_pop[i],
+                  y = data$filter_data[[i]]$covid_data$vel_cases,
                   name = data$filter_countries[i],
                   colors = brewer.pal(n = length(data$filter_countries),
                                       name = "RdBu"),
@@ -686,8 +686,7 @@ comparative_countries <- function(data, log = FALSE, n_hab = 1,
         fig5 <-
           fig5 %>% add_trace(data = data$filter_data[[i]]$covid_data,
                              x = ~date,
-                             y = data$filter_data[[i]]$covid_data$vel_cases /
-                               rel_pop[i],
+                             y = data$filter_data[[i]]$covid_data$vel_cases,
                              name = data$filter_countries[i],
                              type = 'scatter', mode = 'markers+lines',
                              colors =
@@ -732,7 +731,7 @@ comparative_countries <- function(data, log = FALSE, n_hab = 1,
         fig6 <-
           plot_ly(data = data$filter_data[[i]]$covid_data,
                   x = ~date,
-                  y = data$filter_data[[i]]$covid_data$vel_deaths / rel_pop[i],
+                  y = data$filter_data[[i]]$covid_data$vel_deaths,
                   name = data$filter_countries[i],
                   colors = brewer.pal(n = length(data$filter_countries),
                                       name = "RdBu"),
@@ -746,8 +745,7 @@ comparative_countries <- function(data, log = FALSE, n_hab = 1,
         fig6 <-
           fig6 %>% add_trace(data = data$filter_data[[i]]$covid_data,
                              x = ~date,
-                             y = data$filter_data[[i]]$covid_data$vel_deaths /
-                               rel_pop[i],
+                             y = data$filter_data[[i]]$covid_data$vel_deaths,
                              name = data$filter_countries[i],
                              type = 'scatter', mode = 'markers+lines',
                              colors =
@@ -795,7 +793,7 @@ comparative_countries <- function(data, log = FALSE, n_hab = 1,
         fig7 <-
           plot_ly(data = data$filter_data[[i]]$covid_data,
                   x = ~date,
-                  y = data$filter_data[[i]]$covid_data$acc_cases / rel_pop[i],
+                  y = data$filter_data[[i]]$covid_data$acc_cases,
                   name = data$filter_countries[i],
                   colors = brewer.pal(n = length(data$filter_countries),
                                       name = "RdBu"),
@@ -809,8 +807,7 @@ comparative_countries <- function(data, log = FALSE, n_hab = 1,
         fig7 <-
           fig7 %>% add_trace(data = data$filter_data[[i]]$covid_data,
                              x = ~date,
-                             y = data$filter_data[[i]]$covid_data$acc_cases /
-                               rel_pop[i],
+                             y = data$filter_data[[i]]$covid_data$acc_cases,
                              name = data$filter_countries[i],
                              type = 'scatter', mode = 'markers+lines',
                              colors =

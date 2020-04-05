@@ -27,8 +27,9 @@ source('./countries_by_continents.R')
 # Codes country available (among others): AFG ARG ARM AUS AUT BEL BOL BRA CAN
 # CHL CHN COL CUB CZE DNK ECU EGY SLV EST SWZ ETH FIN FRA DEU GRC ISL IND IRN
 # IRL ITA JPN LUX MEX NLD NOR PER POL PRT RUS SEN KOR ESP SWE TUR GBR USA VEN
-countries <- c("ESP", "ITA", "FRA", "DEU", "PRT", "GBR", "USA",
-               "CAN", "MEX", "CHN", "NLD") 
+countries <- c("ESP", "ITA", "FRA", "DEU", "GBR",
+               "USA", "MEX",
+               "ARG", "BRA", "ECU") 
 
 # LOG: Do you want data in the original scle or in the log scale?
 log <- FALSE # If log <- TRUE, cases and deaths are plotted in log_10 scale
@@ -43,7 +44,7 @@ save_local <- TRUE
 
 # N_HAB: Do you want to show all data in a relative way, in terms of
 # each n_hab people? For example, each 10.000 people (n_hab = 10000)
-n_hab <- 1e6 # If n_hab <- FALSE, deaths or cases are plotted as usual
+n_hab <- FALSE # If n_hab <- FALSE, deaths or cases are plotted as usual
 
 # ALIGNED: Do you want to align the data, starting all graphics at Day 0,
 # defining as the first day in which cumulative cases are greater than

@@ -4,7 +4,7 @@
 ##
 
 asia <- c("AFG", "AZE", "BHR", "BGD", "BTN", "BRN", "KHM", "CHN", "GUM", "IND",
-          "IDN", "IRN", "IRQ", "ISR", "JAP", "JOR", "KAZ", "KWT", "KGZ", "LAO",
+          "IDN", "IRN", "IRQ", "ISR", "JPN", "JOR", "KAZ", "KWT", "KGZ", "LAO",
           "MNG", "MYS", "MMR", "NPL", "SGP", "KOR", "UZB", "VNM", "ARE",
           "TWN", "LKA", "THA", "OMN", "PAK", "PSE", "PHL", "QAT", "SAU",
           "TLS", "TUR") # turkey is included  
@@ -28,10 +28,10 @@ central_north_america <- c("ATG", "ABW", "BHS", "BRB", "BEL", "BMU", "VGB",
                            "CAN", "CYM", "CRI", "CUB", "CUW", "DMA", "DOM",
                            "SLV", "GRD", "GTM", "HTI", "HND", "JAM", "MEX",
                            "MSR", "NIC", "PAN", "VIR", "TTO", "PRI", "KNA", 
-                           "LCA", "VCT", "TCA", "SXM") # aruba (netherlands)
+                           "LCA", "VCT", "TCA", "SXM", "USA") # aruba (netherlands)
 
 south_america <- c("ARG", "BOL", "BRA", "CHL", "COL", "ECU", "GUY", "MDV",
-                   "SUN", "USA", "URY", "VEN", "PRY", "PER")
+                   "SUN", "URY", "VEN", "PRY", "PER")
 
 oceania <- c("AUS", "FJI", "PYF", "NCL", "NZL", "MNP", "PNG")
  
