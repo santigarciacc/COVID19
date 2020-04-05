@@ -4,7 +4,10 @@
 ![alt text][cran]
 
 
-## Scripts for describing, analysing and predicting the pandemic COVID19
+## Scripts for describing and comparing between countries data from pandemic COVID19
+
+Data for comparing between countries is obtained (and **daily automatically updated**) from [repository of ECDC](https://www.ecdc.europa.eu/en/publications-data/download-todays-data-geographic-distribution-covid-19-cases-worldwide) (repository of **European Centre for Disease Prevention and Control**)
+
 
 ### Description of files
 
