@@ -6,27 +6,29 @@
 
 ## Scripts for describing and comparing between countries data from pandemic COVID19
 
-Data for comparing between countries is obtained (and **daily automatically updated**) from [repository of ECDC](https://www.ecdc.europa.eu/en/publications-data/download-todays-data-geographic-distribution-covid-19-cases-worldwide) (repository of **European Centre for Disease Prevention and Control**)
+Data for exploring and comparing between countries is obtained (and **daily automatically updated**) from [repository of ECDC](https://www.ecdc.europa.eu/en/publications-data/download-todays-data-geographic-distribution-covid-19-cases-worldwide) (repository of **European Centre for Disease Prevention and Control**). Note that data from [repository of ECDC] is daily updated but a day later
 
 
 ### Description of files
 
-The code available is composed of **three code files and one dataset**:
+The code available is composed of **three code files and two datasets**:
 
 - **aux_functions.R**: code with auxiliary functions which should not change it. 
 
-- **countries_by_continents.R**: code for classify each country in its continent. Note that Russia has been included in Europe and Turkey in Asia. The dataset with the classifiction is contained in countries_by_continents.R
+- **countries_by_continents.R**: code for classify each country in its continent. Note that Russia has been included in Europe and Turkey in Asia. The dataset with the classification is contained in [countries_by_cont](https://github.com/JavierAlvarezLiebana/COVID19/blob/master/datasets/countries_by_cont.RData)
 
 - **main_comparing_countries_ECDCdata.R**: code for extracting, filtering and plotting the data. **IMPORTANT**: this code is the only piece of code that the non-expertised user should execute and open.
 
+- **countries_by_cont.RData**: dataset with countries classified by continents (see  [countries_by_cont](https://github.com/JavierAlvarezLiebana/COVID19/blob/master/datasets/countries_by_cont.RData))
 
-The rest of datasets .RData are the raw data extracted from the ECDC repository, since some days the URL is changed and the extraction from the ECDC URL does not work.
+- **updated_data.RData**: raw dataset directly extracted from  [repository of ECDC]  (see  [updated_data](https://github.com/JavierAlvarezLiebana/COVID19/blob/master/datasets/updated_data.RData))
+
 
 ### Installation (please, check before question to be asked below):
 
 #### Option 1: R studio (recommended):
 
-**Download all files** of [repository](https://github.com/JavierAlvarezLiebana/COVID19/tree/master) in the same folder of your computer and **just open the** [main file](https://github.com/JavierAlvarezLiebana/COVID19/blob/master/main_comparing_countries_ECDCdata)
+**Download all files (in a zip, then unzip)** of [repository](https://github.com/JavierAlvarezLiebana/COVID19/tree/master) in the same folder of your computer and **just open the** [main file](https://github.com/JavierAlvarezLiebana/COVID19/blob/master/main_comparing_countries_ECDCdata.R)
 
 ![Head of code. Source on save must be ticked](https://github.com/JavierAlvarezLiebana/COVID19/blob/master/figures/head_code_source_on_save.jpg)
 
@@ -45,7 +47,7 @@ source('your_path_of_files/main_comparing_countries_ECDCdata.R')
 
 Please, **before executing, read the questions asked** at the beginning of the [main file](https://github.com/JavierAlvarezLiebana/COVID19/blob/master/main_comparing_countries_ECDCdata.R): 
 
-- **countries**: introduce the **code of the countries** that you want to plot (maximum 11 at the same time). Check the available codes in [countries by continents dataset](https://github.com/JavierAlvarezLiebana/COVID19/blob/master/countries_by_cont.RData)
+- **countries**: introduce the **code of the countries** that you want to plot (maximum 11 at the same time). Check the available codes in [code_countries_by_cont](https://github.com/JavierAlvarezLiebana/COVID19/blob/master/countries_by_continents.R) and the dataset in [countries_by_cont] for searching **ISO code countries**.
 
 ```R
 countries <- c("ESP", "ITA", "FRA", "DEU", "PRT", "GBR", "USA",
