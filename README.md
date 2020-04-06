@@ -28,7 +28,7 @@ The rest of datasets .RData are the raw data extracted from the ECDC repository,
 
 **Download all files** of [repository](https://github.com/JavierAlvarezLiebana/COVID19/tree/master) in the same folder of your computer and **just open the** [main file](https://github.com/JavierAlvarezLiebana/COVID19/blob/master/main_comparing_countries_ECDCdata)
 
-![Head of code. Source on save must be ticked](https://github.com/JavierAlvarezLiebana/COVID19/blob/master/head_code_source_on_save.jpg)
+![Head of code. Source on save must be ticked](https://github.com/JavierAlvarezLiebana/COVID19/blob/master/figures/head_code_source_on_save.jpg)
 
 Note that at the beginning of the [main file](https://github.com/JavierAlvarezLiebana/COVID19/blob/master/main_comparing_countries_ECDCdata.R), all **variables will be removed** and all packages required will be attached. You can execute the whole code just pressing the **save button** in the R studio, making sure that the **option source on save is previously ticked**.
 
@@ -251,7 +251,7 @@ graphics_countries$fig_cases # Plotting the daily cases for each selected countr
 
 Daily cases aligned by cases per each 1 millon habitants, 5th April 2020:
 
-![Daily cases aligned by cases per each 1 millon habitants, 5th April 2020](https://github.com/JavierAlvarezLiebana/COVID19/blob/master/daily_cases.jpg)
+![Daily cases aligned by cases per each 1 millon habitants, 5th April 2020](https://github.com/JavierAlvarezLiebana/COVID19/blob/master/figures/daily_cases.jpg)
 
 
 ```R
@@ -260,7 +260,7 @@ graphics_countries$fig_deaths # Plotting the daily deaths for each selected coun
 
 Daily deaths aligned by cases per each 1 millon habitants, 5th April 2020:
 
-![Daily deaths aligned by cases per each 1 millon habitants, 5th April 2020](https://github.com/JavierAlvarezLiebana/COVID19/blob/master/daily_deaths.jpg)
+![Daily deaths aligned by cases per each 1 millon habitants, 5th April 2020](https://github.com/JavierAlvarezLiebana/COVID19/blob/master/figures/daily_deaths.jpg)
 
 
 ```R
@@ -269,12 +269,12 @@ graphics_countries$fig_cum_cases # Plotting the cumulative cases for each select
 
 Cum cases aligned by cases per each 1 millon habitants, 5th April 2020:
 
-![Cum cases aligned by cases per each 1 millon habitants, 5th April 2020](https://github.com/JavierAlvarezLiebana/COVID19/blob/master/cum_cases.jpg)
+![Cum cases aligned by cases per each 1 millon habitants, 5th April 2020](https://github.com/JavierAlvarezLiebana/COVID19/blob/master/figures/cum_cases.jpg)
 
 
 **Note that each figure is interactive and it can be enlarged just selecting the zoom area**
 
-![Cum cases aligned by cases per each 1 millon habitants, 5th April 2020](https://github.com/JavierAlvarezLiebana/COVID19/blob/master/zoom.jpg)
+![Cum cases aligned by cases per each 1 millon habitants, 5th April 2020](https://github.com/JavierAlvarezLiebana/COVID19/blob/master/figures/zoom.jpg)
 
 
 
