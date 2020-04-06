@@ -138,15 +138,13 @@ extracting_ECDC_covid19 <-
   function(source = paste0("https://www.ecdc.europa.eu/sites/",
                            "default/files/documents/",
                            "COVID-19-geographic-disbtribution-worldwide-",
-                           as.character(as.Date(format(Sys.time(),
-                                                       "%Y-%m-%d")) - 1),
-                           ".xlsx"),
+                           format(Sys.time(), "%Y-%m-%d"), ".xlsx"),
            file_format = ".xlsx",
            http_auth = authenticate(":", ":", type = "ntlm"),
            dates = as.Date(c("2019-12-31", format(Sys.time(), "%Y-%m-%d"))),
            countries = c("ESP", "ITA", "DEU", "FRA", "CHN", "KOR", "USA",
                          "GBR", "IRN"), save_local = FALSE) {
-   
+    
     # Downloading the dataset from the url to our local as a temporary file
     GET(source, http_auth, write_disk(temp_file <-
                                      tempfile(fileext = file_format)))
@@ -265,7 +263,7 @@ extracting_ECDC_covid19 <-
     if (save_local) {
       
       # Save raw and filter DATA
-      today <- format(Sys.time(), "%d-%m-%Y")
+      today <- as.character(as.Date(format(Sys.time(), "%Y-%m-%d")) - 1)
       save(raw_data, file = paste0("raw_ECDC_data_", today, ".RData"))
       save(filter_data, file = paste0("filtered_ECDC_data_", today, ".RData"))
       
