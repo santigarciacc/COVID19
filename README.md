@@ -28,7 +28,7 @@ The code available is composed of **three code files and two datasets**:
 
 #### Option 1: R studio (recommended):
 
-**Download all files (in a zip, then unzip)** of [repository](https://github.com/JavierAlvarezLiebana/COVID19/tree/master) in the same folder of your computer and **just open the** [main file](https://github.com/JavierAlvarezLiebana/COVID19/blob/master/main_comparing_countries_ECDCdata.R)
+**Download all files (in a zip, then unzip)** of [repository](https://github.com/JavierAlvarezLiebana/COVID19/tree/master) (no matter the folder where you save it) and then **just open** [main file](https://github.com/JavierAlvarezLiebana/COVID19/blob/master/main_comparing_countries_ECDCdata.R)
 
 ![Head of code. Source on save must be ticked](https://github.com/JavierAlvarezLiebana/COVID19/blob/master/figures/head_code_source_on_save.jpg)
 
