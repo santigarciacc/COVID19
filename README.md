@@ -30,9 +30,12 @@ The code available is composed of **three code files and two datasets**:
 
 **Download all files (in a zip, then unzip)** of [repository](https://github.com/JavierAlvarezLiebana/COVID19/tree/master) (no matter the folder where you save it) and then **just open** [main file](https://github.com/JavierAlvarezLiebana/COVID19/blob/master/main_comparing_countries_ECDCdata.R)
 
-![Head of code. Source on save must be ticked](https://github.com/JavierAlvarezLiebana/COVID19/blob/master/figures/head_code_source_on_save.jpg)
+![Download zip](https://github.com/JavierAlvarezLiebana/COVID19/blob/master/figures/download_zip.jpg)
+
 
 Note that at the beginning of the [main file](https://github.com/JavierAlvarezLiebana/COVID19/blob/master/main_comparing_countries_ECDCdata.R), all **variables will be removed** and all packages required will be attached. You can execute the whole code just pressing the **save button** (the save button which appears in the previous picture) in the R studio, making sure that the **option** `source on save` (on the right of the save button) is **previously ticked**.
+
+![Head of code. Source on save must be ticked](https://github.com/JavierAlvarezLiebana/COVID19/blob/master/figures/head_code_source_on_save.jpg)
 
 
 **HELP**: if some **error occurs** during the first **installation of the R packages**, please check if the following **yellow menu bar** has been appeared 
