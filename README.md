@@ -6,7 +6,7 @@
 
 ## PART I: Scripts for describing and comparing between countries data from pandemic COVID19. Data extracted from European Centre for Disease Prevention and Control repository (see [Part II](https://github.com/JavierAlvarezLiebana/COVID19/blob/master/README.md#part-ii-scripts-for-exploring-and-predicting-data-from-pandemic-covid19-in-spain) below for a more extended analysis of Spanish data)
 
-Data for exploring and comparing between countries is obtained (and **daily automatically updated**) from [repository of ECDC](https://www.ecdc.europa.eu/en/publications-data/download-todays-data-geographic-distribution-covid-19-cases-worldwide) (repository of **European Centre for Disease Prevention and Control**). Note that data from [repository of ECDC] is daily updated but a day later
+Data for exploring and comparing between countries is obtained (and **daily automatically updated**) from [repository of ECDC](https://www.ecdc.europa.eu/en/publications-data/download-todays-data-geographic-distribution-covid-19-cases-worldwide) (repository of **European Centre for Disease Prevention and Control**). Note that data from [repository of ECDC](https://www.ecdc.europa.eu/en/publications-data/download-todays-data-geographic-distribution-covid-19-cases-worldwide) is daily updated but a day later
 
 
 ### Description of files
