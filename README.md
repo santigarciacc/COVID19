@@ -192,7 +192,7 @@ ECDC_ESP$covid_data$dev_cont_cum_deaths
 
 #### Raw ECDC data by continents:
 
-Loading the **dataset (data frame) with the raw data** directly from the [repository of ECDC], but grouped by continents Note that the data is chronologically sorted, the newest on top:
+Loading the **dataset (data frame) with the raw data** directly from [repository of ECDC], but grouped by continents Note that the data is chronologically sorted, the newest on top:
 
 ```R
 ECDC_data$data_by_continents[[1]] # Europe
@@ -251,32 +251,32 @@ Showing the **graphics asked** (note that if some of the flags were `FALSE`, the
 graphics_countries$fig_cases # Plotting the daily cases for each selected country
 ```
 
-Daily cases aligned by cases per each 1 millon habitants, 5th April 2020:
+Daily cases aligned by cases per each 1 millon habitants, 4th April 2020:
 
-![Daily cases aligned by cases per each 1 millon habitants, 5th April 2020](https://github.com/JavierAlvarezLiebana/COVID19/blob/master/figures/daily_cases.jpg)
+![Daily cases aligned by cases per each 1 millon habitants, 4th April 2020](https://github.com/JavierAlvarezLiebana/COVID19/blob/master/figures/daily_cases.jpg)
 
 
 ```R
 graphics_countries$fig_deaths # Plotting the daily deaths for each selected country
 ```
 
-Daily deaths aligned by cases per each 1 millon habitants, 5th April 2020:
+Daily deaths aligned by cases per each 1 millon habitants, 4th April 2020:
 
-![Daily deaths aligned by cases per each 1 millon habitants, 5th April 2020](https://github.com/JavierAlvarezLiebana/COVID19/blob/master/figures/daily_deaths.jpg)
+![Daily deaths aligned by cases per each 1 millon habitants, 4th April 2020](https://github.com/JavierAlvarezLiebana/COVID19/blob/master/figures/daily_deaths.jpg)
 
 
 ```R
 graphics_countries$fig_cum_cases # Plotting the cumulative cases for each selected country
 ```
 
-Cum cases aligned by cases per each 1 millon habitants, 5th April 2020:
+Cum cases aligned by cases per each 1 millon habitants, 4th April 2020:
 
-![Cum cases aligned by cases per each 1 millon habitants, 5th April 2020](https://github.com/JavierAlvarezLiebana/COVID19/blob/master/figures/cum_cases.jpg)
+![Cum cases aligned by cases per each 1 millon habitants, 4th April 2020](https://github.com/JavierAlvarezLiebana/COVID19/blob/master/figures/cum_cases.jpg)
 
 
 **Note that each figure is interactive and it can be enlarged just selecting the zoom area**
 
-![Cum cases aligned by cases per each 1 millon habitants, 5th April 2020](https://github.com/JavierAlvarezLiebana/COVID19/blob/master/figures/zoom.jpg)
+![Cum cases aligned by cases per each 1 millon habitants, 4th April 2020](https://github.com/JavierAlvarezLiebana/COVID19/blob/master/figures/zoom.jpg)
 
 
 
@@ -321,6 +321,6 @@ graphics_countries$fig_dev_cont_cum_cases # Plotting relative deviations (resp. 
 graphics_countries$fig_dev_cont_cum_deaths # Plotting relative deviations (resp. to their continents) of deaths for each selected country
 ```
 
-
+**IMPORTANT**: remember that data from [repository of ECDC] is updated a day later, then you are plotting the data from yesterday.
 
 
