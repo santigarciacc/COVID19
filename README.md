@@ -87,13 +87,6 @@ aligned_cases <- TRUE
 perc_pop <- 0.000005 # 0.0005 % of population of each country
 ```
 
-- **aligned_deaths**:  do you want to **align the data** `TRUE`, starting all graphics at **Day 0 of pandemic** defining as the first day in which **cumulative deaths are greater than population * perc_pop**, where `perc_pop` denotes a percentage of the population, or not `FALSE`?
-
-```R
-aligned_deaths <- FALSE
-perc_pop <- 0.000001 # 0.0001 % of population of each country
-```
-
 #### Flags for plotting:
 
 Which graphics do you want to be plotted?
