@@ -4,7 +4,7 @@
 ![alt text][cran]
 
 
-## Scripts for describing and comparing between countries data from pandemic COVID19. Data extracted from European Centre for Disease Prevention and Control repository
+## PART I: Scripts for describing and comparing between countries data from pandemic COVID19. Data extracted from European Centre for Disease Prevention and Control repository (see Part II below for a more extended analysis of Spanish data)
 
 Data for exploring and comparing between countries is obtained (and **daily automatically updated**) from [repository of ECDC](https://www.ecdc.europa.eu/en/publications-data/download-todays-data-geographic-distribution-covid-19-cases-worldwide) (repository of **European Centre for Disease Prevention and Control**). Note that data from [repository of ECDC] is daily updated but a day later
 
@@ -317,3 +317,4 @@ graphics_countries$fig_dev_cont_cum_deaths # Plotting relative deviations (resp.
 **IMPORTANT**: remember that data from [repository of ECDC] is updated a day later, then you are plotting the data from yesterday.
 
 
+## PART II: Scripts for exploring and predicting data from pandemic COVID19 in Spain.
