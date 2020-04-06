@@ -50,11 +50,8 @@ n_hab <- 1e6 # If n_hab <- FALSE, deaths or cases are plotted as usual
 
 # ALIGNED: Do you want to align the data, starting all graphics at Day 0,
 # defining as the first day in which cumulative cases are greater than
-# population * perc_pop (%), or whether do you prefer to align the data fixing
-# as Day 0 the first day in which cumulative deaths are greater than
-# population * perc_pop (%)
+# population * perc_pop (%)?
 aligned_cases <- TRUE
-aligned_deaths <- FALSE # Defaults FALSE if aligned_cases == TRUE
 perc_pop <- 0.0000025 # 0.00025 % of population
   
 # PLOT_CASES, PLOT_DEATHS, PLOT_CUM_CASES, PLOT_CUM_DEATHS, PLOT_MORT_RATE
@@ -134,7 +131,7 @@ for (i in 1:length(ECDC_data$data_by_continents)) {
 graphics_countries <-
   comparative_countries(ECDC_data, log = log, n_hab,
                         aligned_cases = aligned_cases,
-                        aligned_deaths = aligned_deaths, perc_pop = perc_pop,
+                        perc_pop = perc_pop,
                         plot_cases = plot_cases, plot_deaths = plot_deaths,
                         plot_cum_cases = plot_cum_cases,
                         plot_cum_deaths = plot_cum_deaths,

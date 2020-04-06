@@ -292,8 +292,8 @@ extracting_ECDC_covid19 <-
 ##
 
 comparative_countries <- function(data, log = FALSE, n_hab = 1,
-                                  aligned_cases = FALSE, aligned_deaths = FALSE,
-                                  perc_pop = 0.000005,
+                                  aligned_cases = FALSE,
+                                  perc_pop = 0.0000025,
                                   plot_cases = TRUE, plot_deaths = TRUE,
                                   plot_cum_cases = TRUE, plot_cum_deaths = TRUE,
                                   plot_mort_rate = TRUE,
@@ -329,18 +329,6 @@ comparative_countries <- function(data, log = FALSE, n_hab = 1,
       
     }
       
-    if (aligned_deaths) {
-      
-      data$filter_data[[i]]$covid_data <-
-        data$filter_data[[i]]$covid_data[
-          data$filter_data[[i]]$covid_data$cum_deaths >
-            data$filter_data[[i]]$population * perc_pop, ]
-      
-      data$filter_data[[i]]$covid_data$date <-
-        rev(0:(length(data$filter_data[[i]]$covid_data$date) - 1))
-      
-    }
-    
     # Relative population for each country
     rel_pop[i] <- ifelse(is.logical(n_hab), 1,
                          data$filter_data[[i]]$population / n_hab)
@@ -375,27 +363,24 @@ comparative_countries <- function(data, log = FALSE, n_hab = 1,
   
   # Defining the number of cases to be considered and dates allowed
   n_cases <- rep(0, length(data$filter_data))
-  dates_allowed <- rep(ifelse(aligned_cases | aligned_deaths, 0,
+  dates_allowed <- rep(ifelse(aligned_cases, 0,
                               as.Date("2019-12-31", '%Y-%m-%d')),
                        length(data$filter_data))
   
   len_max <- 0
   for (i in 1:length(data$filter_data)) {
     
-    # If aligned_cases or aligned_deaths are TRUE, we just consider the cases
-    # when the cumulative cases (deaths, resp.) is greater than 100 (10, resp.)
+    # If aligned_cases is TRUE, we just consider the cases when the
+    # cumulative cases is greater than a percentage of the population
     n_cases[i] <-
       ifelse(aligned_cases,
              sum(data$filter_data[[i]]$covid_data$cum_cases >
                    perc_pop * data$filter_data[[i]]$population),
-                         ifelse(aligned_deaths,
-                                sum(data$filter_data[[i]]$covid_data$cum_deaths >
-                                      perc_pop * data$filter_data[[i]]$population),
-                                length(data$filter_data[[i]]$covid_data$cum_cases)))
+             length(data$filter_data[[i]]$covid_data$cum_cases))
     
     # Dates from where we will start to plot
     dates_allowed[i] <-
-      ifelse(aligned_cases | aligned_deaths, 0,
+      ifelse(aligned_cases, 0,
              data$filter_data[[i]]$covid_data$date[n_cases[i]])
     
     # Data is sorted from today to the past
@@ -456,19 +441,14 @@ comparative_countries <- function(data, log = FALSE, n_hab = 1,
       layout(title =
                ifelse(aligned_cases,
                       paste0(aux_title, " (aligned, day 0 = cum. cases > ",
-                      100 * perc_pop, "% population)"),
-                      ifelse(aligned_deaths,
-                             paste0(aux_title, " (aligned, day 0 = cum. deaths > ",
-                                    100 * perc_pop, "% population)"),
-                             aux_title)),
+                      100 * perc_pop, "% population)"), aux_title),
              xaxis = list(range =
-                            ifelse(aligned_cases | aligned_deaths,
+                            ifelse(aligned_cases,
                                    0:(len_max - 1),
                                    list(min(dates_allowed),
                                         format(Sys.time(), "%Y-%m-%d"))),
                           title =
-                            ifelse(aligned_cases | aligned_deaths,
-                                   "Days of pandemic", "dates"),
+                            ifelse(aligned_cases, "Days of pandemic", "dates"),
                                    zeroline = FALSE))
      
 
@@ -519,19 +499,13 @@ comparative_countries <- function(data, log = FALSE, n_hab = 1,
       layout(title =
                ifelse(aligned_cases,
                       paste0(aux_title, " (aligned, day 0 = cum. cases > ",
-                             100 * perc_pop, "% population)"),
-                      ifelse(aligned_deaths,
-                             paste0(aux_title, " (aligned, day 0 = cum. deaths > ",
-                                    100 * perc_pop, "% population)"),
-                             aux_title)),
+                             100 * perc_pop, "% population)"), aux_title),
              xaxis = list(range =
-                            ifelse(aligned_cases | aligned_deaths,
-                                   0:(len_max - 1),
+                            ifelse(aligned_cases, 0:(len_max - 1),
                                    list(min(dates_allowed),
                                         format(Sys.time(), "%Y-%m-%d"))),
                           title =
-                            ifelse(aligned_cases | aligned_deaths,
-                                   "Days of pandemic", "dates"),
+                            ifelse(aligned_cases, "Days of pandemic", "dates"),
                                    zeroline = FALSE))
  
    }
@@ -584,19 +558,13 @@ comparative_countries <- function(data, log = FALSE, n_hab = 1,
       layout(title =
                ifelse(aligned_cases,
                       paste0(aux_title, " (aligned, day 0 = cum. cases > ",
-                             100 * perc_pop, "% population)"),
-                      ifelse(aligned_deaths,
-                             paste0(aux_title, " (aligned, day 0 = cum. deaths > ",
-                                    100 * perc_pop, "% population)"),
-                             aux_title)),
+                             100 * perc_pop, "% population)"), aux_title),
              xaxis = list(range =
-                            ifelse(aligned_cases | aligned_deaths,
-                                   0:(len_max - 1),
+                            ifelse(aligned_cases, 0:(len_max - 1),
                                    list(min(dates_allowed),
                                         format(Sys.time(), "%Y-%m-%d"))),
                           title =
-                            ifelse(aligned_cases | aligned_deaths,
-                                   "Days of pandemic", "dates"),
+                            ifelse(aligned_cases, "Days of pandemic", "dates"),
                                    zeroline = FALSE))
 
   }
@@ -646,19 +614,13 @@ comparative_countries <- function(data, log = FALSE, n_hab = 1,
       layout(title =
                ifelse(aligned_cases,
                       paste0(aux_title, " (aligned, day 0 = cum. cases > ",
-                             100 * perc_pop, "% population)"),
-                      ifelse(aligned_deaths,
-                             paste0(aux_title, " (aligned, day 0 = cum. deaths > ",
-                                    100 * perc_pop, "% population)"),
-                             aux_title)),
+                             100 * perc_pop, "% population)"), aux_title),
              xaxis = list(range =
-                            ifelse(aligned_cases | aligned_deaths,
-                                   0:(len_max - 1),
+                            ifelse(aligned_cases, 0:(len_max - 1),
                                    list(min(dates_allowed),
                                         format(Sys.time(), "%Y-%m-%d"))),
                           title =
-                            ifelse(aligned_cases | aligned_deaths,
-                                   "Days of pandemic", "dates"),
+                            ifelse(aligned_cases, "Days of pandemic", "dates"),
                                    zeroline = FALSE))
 
   }
@@ -706,19 +668,13 @@ comparative_countries <- function(data, log = FALSE, n_hab = 1,
       layout(title =
                ifelse(aligned_cases,
                       paste0(aux_title, " (aligned, day 0 = cum. cases > ",
-                             100 * perc_pop, "% population)"),
-                      ifelse(aligned_deaths,
-                             paste0(aux_title, " (aligned, day 0 = cum. deaths > ",
-                                    100 * perc_pop, "% population)"),
-                             aux_title)),
+                             100 * perc_pop, "% population)"), aux_title),
              xaxis = list(range =
-                            ifelse(aligned_cases | aligned_deaths,
-                                   0:(len_max - 1),
+                            ifelse(aligned_cases, 0:(len_max - 1),
                                    list(min(dates_allowed),
                                         format(Sys.time(), "%Y-%m-%d"))),
                           title =
-                            ifelse(aligned_cases | aligned_deaths,
-                                   "Days of pandemic", "dates"),
+                            ifelse(aligned_cases, "Days of pandemic", "dates"),
                                    zeroline = FALSE))
 
   }
@@ -766,19 +722,13 @@ comparative_countries <- function(data, log = FALSE, n_hab = 1,
       layout(title =
                ifelse(aligned_cases,
                       paste0(aux_title, " (aligned, day 0 = cum. cases > ",
-                             100 * perc_pop, "% population)"),
-                      ifelse(aligned_deaths,
-                             paste0(aux_title, " (aligned, day 0 = cum. deaths > ",
-                                    100 * perc_pop, "% population)"),
-                             aux_title)),
+                             100 * perc_pop, "% population)"), aux_title),
              xaxis = list(range =
-                            ifelse(aligned_cases | aligned_deaths,
-                                   0:(len_max - 1),
+                            ifelse(aligned_cases, 0:(len_max - 1),
                                    list(min(dates_allowed),
                                         format(Sys.time(), "%Y-%m-%d"))),
                           title =
-                            ifelse(aligned_cases | aligned_deaths,
-                                   "Days of pandemic", "dates"),
+                            ifelse(aligned_cases, "Days of pandemic", "dates"),
                                    zeroline = FALSE))
 
   }
@@ -828,19 +778,13 @@ comparative_countries <- function(data, log = FALSE, n_hab = 1,
       layout(title =
                ifelse(aligned_cases,
                       paste0(aux_title, " (aligned, day 0 = cum. cases > ",
-                             100 * perc_pop, "% population)"),
-                      ifelse(aligned_deaths,
-                             paste0(aux_title, " (aligned, day 0 = cum. deaths > ",
-                                    100 * perc_pop, "% population)"),
-                             aux_title)),
+                             100 * perc_pop, "% population)"), aux_title),
              xaxis = list(range =
-                            ifelse(aligned_cases | aligned_deaths,
-                                   0:(len_max - 1),
+                            ifelse(aligned_cases, 0:(len_max - 1),
                                    list(min(dates_allowed),
                                         format(Sys.time(), "%Y-%m-%d"))),
                           title =
-                            ifelse(aligned_cases | aligned_deaths,
-                                   "Days of pandemic", "dates"),
+                            ifelse(aligned_cases, "Days of pandemic", "dates"),
                                    zeroline = FALSE))
     
   }
@@ -888,19 +832,13 @@ comparative_countries <- function(data, log = FALSE, n_hab = 1,
       layout(title =
                ifelse(aligned_cases,
                       paste0(aux_title, " (aligned, day 0 = cum. cases > ",
-                             100 * perc_pop, "% population)"),
-                      ifelse(aligned_deaths,
-                             paste0(aux_title, " (aligned, day 0 = cum. deaths > ",
-                                    100 * perc_pop, "% population)"),
-                             aux_title)),
+                             100 * perc_pop, "% population)"), aux_title),
              xaxis = list(range =
-                            ifelse(aligned_cases | aligned_deaths,
-                                   0:(len_max - 1),
+                            ifelse(aligned_cases, 0:(len_max - 1),
                                    list(min(dates_allowed),
                                         format(Sys.time(), "%Y-%m-%d"))),
                           title =
-                            ifelse(aligned_cases | aligned_deaths,
-                                   "Days of pandemic", "dates"),
+                            ifelse(aligned_cases, "Days of pandemic", "dates"),
                                    zeroline = FALSE))
     
   }
@@ -948,19 +886,13 @@ comparative_countries <- function(data, log = FALSE, n_hab = 1,
       layout(title =
                ifelse(aligned_cases,
                       paste0(aux_title, " (aligned, day 0 = cum. cases > ",
-                             100 * perc_pop, "% population)"),
-                      ifelse(aligned_deaths,
-                             paste0(aux_title, " (aligned, day 0 = cum. deaths > ",
-                                    100 * perc_pop, "% population)"),
-                             aux_title)),
+                             100 * perc_pop, "% population)"), aux_title),
              xaxis = list(range =
-                            ifelse(aligned_cases | aligned_deaths,
-                                   0:(len_max - 1),
+                            ifelse(aligned_cases, 0:(len_max - 1),
                                    list(min(dates_allowed),
                                         format(Sys.time(), "%Y-%m-%d"))),
                           title =
-                            ifelse(aligned_cases | aligned_deaths,
-                                   "Days of pandemic", "dates"),
+                            ifelse(aligned_cases, "Days of pandemic", "dates"),
                                    zeroline = FALSE))
   }
     
@@ -1082,19 +1014,13 @@ comparative_countries <- function(data, log = FALSE, n_hab = 1,
       layout(title =
                ifelse(aligned_cases,
                       paste0(aux_title, " (aligned, day 0 = cum. cases > ",
-                             100 * perc_pop, "% population)"),
-                      ifelse(aligned_deaths,
-                             paste0(aux_title, " (aligned, day 0 = cum. deaths > ",
-                                    100 * perc_pop, "% population)"),
-                             aux_title)),
+                             100 * perc_pop, "% population)"), aux_title),
              xaxis = list(range =
-                            ifelse(aligned_cases | aligned_deaths,
-                                   0:(len_max - 1),
+                            ifelse(aligned_cases, 0:(len_max - 1),
                                    list(min(dates_allowed),
                                         format(Sys.time(), "%Y-%m-%d"))),
                           title =
-                            ifelse(aligned_cases | aligned_deaths,
-                                   "Days of pandemic", "dates"),
+                            ifelse(aligned_cases, "Days of pandemic", "dates"),
                           zeroline = FALSE))
     
     # fig11: layout details
@@ -1104,19 +1030,13 @@ comparative_countries <- function(data, log = FALSE, n_hab = 1,
       layout(title =
                ifelse(aligned_cases,
                       paste0(aux_title, " (aligned, day 0 = cum. cases > ",
-                             100 * perc_pop, "% population)"),
-                      ifelse(aligned_deaths,
-                             paste0(aux_title, " (aligned, day 0 = cum. deaths > ",
-                                    100 * perc_pop, "% population)"),
-                             aux_title)),
+                             100 * perc_pop, "% population)"), aux_title),
              xaxis = list(range =
-                            ifelse(aligned_cases | aligned_deaths,
-                                   0:(len_max - 1),
+                            ifelse(aligned_cases, 0:(len_max - 1),
                                    list(min(dates_allowed),
                                         format(Sys.time(), "%Y-%m-%d"))),
                           title =
-                            ifelse(aligned_cases | aligned_deaths,
-                                   "Days of pandemic", "dates"),
+                            ifelse(aligned_cases, "Days of pandemic", "dates"),
                           zeroline = FALSE))
     
     # fig12: layout details
@@ -1126,19 +1046,13 @@ comparative_countries <- function(data, log = FALSE, n_hab = 1,
       layout(title =
                ifelse(aligned_cases,
                       paste0(aux_title, " (aligned, day 0 = cum. cases > ",
-                             100 * perc_pop, "% population)"),
-                      ifelse(aligned_deaths,
-                             paste0(aux_title, " (aligned, day 0 = cum. deaths > ",
-                                    100 * perc_pop, "% population)"),
-                             aux_title)),
+                             100 * perc_pop, "% population)"), aux_title),
              xaxis = list(range =
-                            ifelse(aligned_cases | aligned_deaths,
-                                   0:(len_max - 1),
+                            ifelse(aligned_cases, 0:(len_max - 1),
                                    list(min(dates_allowed),
                                         format(Sys.time(), "%Y-%m-%d"))),
                           title =
-                            ifelse(aligned_cases | aligned_deaths,
-                                   "Days of pandemic", "dates"),
+                            ifelse(aligned_cases, "Days of pandemic", "dates"),
                           zeroline = FALSE))
     
     # fig13: layout details
@@ -1148,19 +1062,13 @@ comparative_countries <- function(data, log = FALSE, n_hab = 1,
       layout(title =
                ifelse(aligned_cases,
                       paste0(aux_title, " (aligned, day 0 = cum. cases > ",
-                             100 * perc_pop, "% population)"),
-                      ifelse(aligned_deaths,
-                             paste0(aux_title, " (aligned, day 0 = cum. deaths > ",
-                                    100 * perc_pop, "% population)"),
-                             aux_title)),
+                             100 * perc_pop, "% population)"), aux_title),
              xaxis = list(range =
-                            ifelse(aligned_cases | aligned_deaths,
-                                   0:(len_max - 1),
+                            ifelse(aligned_cases, 0:(len_max - 1),
                                    list(min(dates_allowed),
                                         format(Sys.time(), "%Y-%m-%d"))),
                           title =
-                            ifelse(aligned_cases | aligned_deaths,
-                                   "Days of pandemic", "dates"),
+                            ifelse(aligned_cases, "Days of pandemic", "dates"),
                           zeroline = FALSE))
 
   }
