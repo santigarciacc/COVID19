@@ -20,6 +20,8 @@ The code available is composed of **three code files and one dataset**:
 - **main_comparing_countries_ECDCdata.R**: code for extracting, filtering and plotting the data. **IMPORTANT**: this code is the only piece of code that the non-expertised user should execute and open.
 
 
+The rest of datasets .RData are the raw data extracted from the ECDC repository, since some days the URL is changed and the extraction from the ECDC URL does not work.
+
 ### Installation (please, check before question to be asked below):
 
 #### Option 1: R studio (recommended):
