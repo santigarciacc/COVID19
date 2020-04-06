@@ -37,8 +37,7 @@ Note that at the beginning of the [main file](https://github.com/JavierAlvarezLi
 
 **HELP**: if some **error occurs** during the first **installation of the R packages**, please check if the following **yellow menu bar** has been appeared 
 
-![errors installing r packages]
-(https://github.com/JavierAlvarezLiebana/COVID19/blob/master/figures/error_installing.jpg)
+![errors installing r packages](https://github.com/JavierAlvarezLiebana/COVID19/blob/master/figures/error_installing.jpg)
 
 If this is the case, please **click on the button `install`** and wait again till the packages are installed. Otherwise, please continue to [Questions to be asked](https://github.com/JavierAlvarezLiebana/COVID19#questions-to-be-asked-before-executing) below.
 
