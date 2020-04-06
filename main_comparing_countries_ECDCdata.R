@@ -7,6 +7,8 @@ if(!require(httr)) install.packages("httr", repos = repos)
 if(!require(plotly)) install.packages("plotly", repos = repos)
 if(!require(RColorBrewer)) install.packages("RColorBrewer", repos = repos)
 if(!require(readxl)) install.packages("readxl", repos = repos)
+if(!require(utils)) install.packages("utils", repos = repos)
+
 
 # DO NOT CHANGE: Source files, my own codes that we will need
 setwd(dirname(rstudioapi::getSourceEditorContext()$path))
@@ -27,12 +29,12 @@ source('./countries_by_continents.R')
 # Codes country available (among others): AFG ARG ARM AUS AUT BEL BOL BRA CAN
 # CHL CHN COL CUB CZE DNK ECU EGY SLV EST SWZ ETH FIN FRA DEU GRC ISL IND IRN
 # IRL ITA JPN LUX MEX NLD NOR PER POL PRT RUS SEN KOR ESP SWE TUR GBR USA VEN
-countries <- c("ESP", "ITA", "FRA", "DEU", "GBR",
-               "USA", "MEX",
-               "ARG", "BRA", "ECU") 
 
-# LOG: Do you want data in the original scle or in the log scale?
-log <- FALSE # If log <- TRUE, cases and deaths are plotted in log_10 scale
+countries <- c("ABW", "FRO", "AND", "VAT", "LKA", "GIB",
+               "FJI", "SYC", "SMR", "MSR") 
+
+# LOG: Do you want data in the original scale or in the log scale?
+log <- FALSE # If log <- TRUE, cases and deaths are plotted in log scale
 
 # DATES: Since when do you want to analysed?
 from_date <- "2019-12-31" # Please, modify with a date in format "YYYY-mm-dd"
@@ -40,11 +42,11 @@ to_date <- format(Sys.time(), "%Y-%m-%d") # DO NOT CHANGE
 dates <- as.Date(c(from_date, to_date)) # DO NOT CHANGE
 
 # SAVE_LOCAL: Do you want to save in your computer the datasets? TRUE/FALSE
-save_local <- TRUE
+save_local <- FALSE
 
 # N_HAB: Do you want to show all data in a relative way, in terms of
 # each n_hab people? For example, each 10.000 people (n_hab = 10000)
-n_hab <- FALSE # If n_hab <- FALSE, deaths or cases are plotted as usual
+n_hab <- 1e2 # If n_hab <- FALSE, deaths or cases are plotted as usual
 
 # ALIGNED: Do you want to align the data, starting all graphics at Day 0,
 # defining as the first day in which cumulative cases are greater than
@@ -53,7 +55,7 @@ n_hab <- FALSE # If n_hab <- FALSE, deaths or cases are plotted as usual
 # population * perc_pop (%)
 aligned_cases <- TRUE
 aligned_deaths <- FALSE # Defaults FALSE if aligned_cases == TRUE
-perc_pop <-  0.000005 # 0.0005 % of population
+perc_pop <- 0.000005 # 0.0005 % of population
   
 # PLOT_CASES, PLOT_DEATHS, PLOT_CUM_CASES, PLOT_CUM_DEATHS, PLOT_MORT_RATE
 plot_cases <- TRUE # A graphic about the daily cases? TRUE/FALSE

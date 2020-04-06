@@ -137,13 +137,16 @@ filtering_data_covid19 <-
 extracting_ECDC_covid19 <-
   function(source = paste0("https://www.ecdc.europa.eu/sites/",
                            "default/files/documents/",
-                           "COVID-19-geographic-disbtribution-worldwide.xlsx"),
+                           "COVID-19-geographic-disbtribution-worldwide-",
+                           as.character(as.Date(format(Sys.time(),
+                                                       "%Y-%m-%d")) - 1),
+                           ".xlsx"),
            file_format = ".xlsx",
            http_auth = authenticate(":", ":", type = "ntlm"),
            dates = as.Date(c("2019-12-31", format(Sys.time(), "%Y-%m-%d"))),
            countries = c("ESP", "ITA", "DEU", "FRA", "CHN", "KOR", "USA",
                          "GBR", "IRN"), save_local = FALSE) {
-  
+   
     # Downloading the dataset from the url to our local as a temporary file
     GET(source, http_auth, write_disk(temp_file <-
                                      tempfile(fileext = file_format)))
@@ -853,7 +856,7 @@ comparative_countries <- function(data, log = FALSE, n_hab = 1,
         fig8 <-
           plot_ly(data = data$filter_data[[i]]$covid_data,
                   x = ~date,
-                  y = data$filter_data[[i]]$covid_data$acc_deaths / rel_pop[i],
+                  y = data$filter_data[[i]]$covid_data$acc_deaths,
                   name = data$filter_countries[i],
                   colors = brewer.pal(n = length(data$filter_countries),
                                       name = "RdBu"),
@@ -867,8 +870,7 @@ comparative_countries <- function(data, log = FALSE, n_hab = 1,
         fig8 <-
           fig8 %>% add_trace(data = data$filter_data[[i]]$covid_data,
                              x = ~date,
-                             y = data$filter_data[[i]]$covid_data$acc_deaths /
-                               rel_pop[i],
+                             y = data$filter_data[[i]]$covid_data$acc_deaths,
                              name = data$filter_countries[i],
                              type = 'scatter', mode = 'markers+lines',
                              colors =
@@ -914,7 +916,7 @@ comparative_countries <- function(data, log = FALSE, n_hab = 1,
         fig9 <-
           plot_ly(data = data$filter_data[[i]]$covid_data,
                   x = ~date,
-                  y = data$filter_data[[i]]$covid_data$mort_rate / rel_pop[i],
+                  y = data$filter_data[[i]]$covid_data$mort_rate,
                   name = data$filter_countries[i],
                   colors = brewer.pal(n = length(data$filter_countries),
                                       name = "RdBu"),
@@ -928,8 +930,7 @@ comparative_countries <- function(data, log = FALSE, n_hab = 1,
         fig9 <-
           fig9 %>% add_trace(data = data$filter_data[[i]]$covid_data,
                              x = ~date,
-                             y = data$filter_data[[i]]$covid_data$mort_rate /
-                               rel_pop[i],
+                             y = data$filter_data[[i]]$covid_data$mort_rate,
                              name = data$filter_countries[i],
                              type = 'scatter', mode = 'markers+lines',
                              colors =
