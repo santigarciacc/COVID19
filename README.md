@@ -34,7 +34,16 @@ The code available is composed of **three code files and two datasets**:
 
 Note that at the beginning of the [main file](https://github.com/JavierAlvarezLiebana/COVID19/blob/master/main_comparing_countries_ECDCdata.R), all **variables will be removed** and all packages required will be attached. You can execute the whole code just pressing the **save button** (the save button which appears in the previous picture) in the R studio, making sure that the **option** `source on save` (on the right of the save button) is **previously ticked**.
 
-#### Option 2: classical R terminal:
+
+**HELP**: if some **error occurs** during the first **installation of the R packages**, please check if the following **yellow menu bar** has been appeared 
+
+![errors installing r packages]
+(https://github.com/JavierAlvarezLiebana/COVID19/blob/master/figures/error_installing.jpg)
+
+If this is the case, please **click on the button `install`** and wait again till the packages are installed. Otherwise, please continue to [Questions to be asked](https://github.com/JavierAlvarezLiebana/COVID19#questions-to-be-asked-before-executing) below.
+
+
+#### Option 2: classical R terminal (just if you have not installed with Option 1):
 
 You can also execute in the classical terminal of R by writting (note that `your_path_of_files` should b the path of your computer where you have saved the files)
  
