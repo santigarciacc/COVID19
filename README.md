@@ -24,7 +24,7 @@ The code available is composed of **three code files and two datasets**:
 - **updated_data.RData**: raw dataset directly extracted from  [repository of ECDC]  (see  [updated_data](https://github.com/JavierAlvarezLiebana/COVID19/blob/master/datasets/updated_data.RData))
 
 
-### Installation (please, check before question to be asked below):
+### Installation:
 
 #### Option 1: R studio (recommended):
 
