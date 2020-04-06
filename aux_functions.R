@@ -137,8 +137,7 @@ filtering_data_covid19 <-
 extracting_ECDC_covid19 <-
   function(source = paste0("https://www.ecdc.europa.eu/sites/",
                            "default/files/documents/",
-                           "COVID-19-geographic-disbtribution-worldwide-",
-                           format(Sys.time(), "%Y-%m-%d"), ".xlsx"),
+                           "COVID-19-geographic-disbtribution-worldwide-"),
            file_format = ".xlsx",
            http_auth = authenticate(":", ":", type = "ntlm"),
            dates = as.Date(c("2019-12-31", format(Sys.time(), "%Y-%m-%d"))),
@@ -146,8 +145,22 @@ extracting_ECDC_covid19 <-
                          "GBR", "IRN"), save_local = FALSE) {
     
     # Downloading the dataset from the url to our local as a temporary file
-    GET(source, http_auth, write_disk(temp_file <-
-                                     tempfile(fileext = file_format)))
+    for (d in 0:30) {
+      
+      url_date <-
+        paste0(source,
+               as.character(as.Date(format(Sys.time(), "%Y-%m-%d")) - d),
+               ".xlsx")
+      
+      status <-
+        tryCatch(GET(url_date, http_auth,
+                     write_disk(temp_file <- tempfile(fileext = file_format))),
+                 error = function(e) { return(1) })
+      
+      if (typeof(status) == "list" & status$status_code != 404) { break }
+      
+    }
+    
 
     # After downloading, we convert the dataset into a data frame
     raw_data <- read_xlsx(temp_file)
