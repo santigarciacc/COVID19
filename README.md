@@ -317,4 +317,4 @@ graphics_countries$fig_dev_cont_cum_deaths # Plotting relative deviations (resp.
 **IMPORTANT**: remember that data from [repository of ECDC] is updated a day later, then you are plotting the data from yesterday.
 
 
-## PART II: Scripts for exploring and predicting data from pandemic COVID19 in Spain.
+## PART II: Scripts for exploring and predicting data from pandemic COVID19 in Spain
