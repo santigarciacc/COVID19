@@ -8,8 +8,6 @@ if(!require(plotly)) install.packages("plotly", repos = repos)
 if(!require(RColorBrewer)) install.packages("RColorBrewer", repos = repos)
 if(!require(readxl)) install.packages("readxl", repos = repos)
 if(!require(utils)) install.packages("utils", repos = repos)
-if(!require(repmis)) install.packages("repmis", repos = repos)
-
 
 # DO NOT CHANGE: Source files, my own codes that we will need
 setwd(dirname(rstudioapi::getSourceEditorContext()$path))
