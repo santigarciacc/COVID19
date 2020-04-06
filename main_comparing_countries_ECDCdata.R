@@ -30,8 +30,8 @@ source('./countries_by_continents.R')
 # CHL CHN COL CUB CZE DNK ECU EGY SLV EST SWZ ETH FIN FRA DEU GRC ISL IND IRN
 # IRL ITA JPN LUX MEX NLD NOR PER POL PRT RUS SEN KOR ESP SWE TUR GBR USA VEN
 
-countries <- c("ABW", "FRO", "AND", "VAT", "LKA", "GIB",
-               "FJI", "SYC", "SMR", "MSR") 
+countries <- c("ESP", "ITA", "FRA", "USA", "KOR", "CHN")
+  
 
 # LOG: Do you want data in the original scale or in the log scale?
 log <- FALSE # If log <- TRUE, cases and deaths are plotted in log scale
