@@ -1,5 +1,6 @@
 # Remove all the variables
 rm(list = ls())
+assign("last.warning", NULL, envir = baseenv()) # Clean warnings
 
 # DO NOT CHANGE: libraries required: Rcode that we will need
 repos <- "http://cran.us.r-project.org"
@@ -29,7 +30,8 @@ source('./countries_by_continents.R')
 # CHL CHN COL CUB CZE DNK ECU EGY SLV EST SWZ ETH FIN FRA DEU GRC ISL IND IRN
 # IRL ITA JPN LUX MEX NLD NOR PER POL PRT RUS SEN KOR ESP SWE TUR GBR USA VEN
 
-countries <- c("ESP", "ITA", "PRT", "DEU", "FRA", "USA", "JPN") 
+countries <- c("ESP", "ITA", "BOL", "ARG", "DEU", "GBR",
+               "PRT", "JPN", "MEX", "USA", "SGP") 
 
 # LOG: Do you want data in the original scale or in the log scale?
 log <- FALSE # If log <- TRUE, cases and deaths are plotted in log scale

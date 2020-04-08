@@ -408,6 +408,9 @@ comparative_countries <- function(data, log = FALSE, n_hab = 1,
   # If figures are not plotted, figures are NULL
   fig1 <- fig2 <- fig3 <- fig4 <- fig5 <- fig6 <- NULL
   fig7 <- fig8 <- fig9 <- fig10 <- fig11 <- fig12 <- fig13 <- NULL
+  
+  author_source <- paste("(source: Spanish Health Ministry,",
+                         "graphics by Javier Álvarez Liébana)")
   if (plot_cases) {
     
     for (i in 1:length(data$filter_countries)) {
@@ -452,9 +455,10 @@ comparative_countries <- function(data, log = FALSE, n_hab = 1,
     fig1 <- fig1 %>%
       
       layout(title =
-               ifelse(aligned_cases,
+               paste(ifelse(aligned_cases,
                       paste0(aux_title, " (aligned, day 0 = cum. cases > ",
                       100 * perc_pop, "% population)"), aux_title),
+                     "\n ", author_source),
              xaxis = list(range =
                             ifelse(aligned_cases,
                                    0:(len_max - 1),
@@ -462,7 +466,9 @@ comparative_countries <- function(data, log = FALSE, n_hab = 1,
                                         format(Sys.time(), "%Y-%m-%d"))),
                           title =
                             ifelse(aligned_cases, "Days of pandemic", "dates"),
-                                   zeroline = FALSE))
+                                   zeroline = FALSE),
+             plot_bgcolor='rgb(254, 247, 234)',
+             paper_bgcolor='rgb(254, 247, 234)')
      
 
   }
@@ -510,16 +516,19 @@ comparative_countries <- function(data, log = FALSE, n_hab = 1,
     fig2 <- fig2 %>%
       
       layout(title =
-               ifelse(aligned_cases,
-                      paste0(aux_title, " (aligned, day 0 = cum. cases > ",
-                             100 * perc_pop, "% population)"), aux_title),
+               paste(ifelse(aligned_cases,
+                            paste0(aux_title, " (aligned, day 0 = cum. cases > ",
+                                   100 * perc_pop, "% population)"), aux_title),
+                     "\n ", author_source),
              xaxis = list(range =
                             ifelse(aligned_cases, 0:(len_max - 1),
                                    list(min(dates_allowed),
                                         format(Sys.time(), "%Y-%m-%d"))),
                           title =
                             ifelse(aligned_cases, "Days of pandemic", "dates"),
-                                   zeroline = FALSE))
+                                   zeroline = FALSE),
+             plot_bgcolor='rgb(254, 247, 234)',
+             paper_bgcolor='rgb(254, 247, 234)')
  
    }
 
@@ -569,16 +578,19 @@ comparative_countries <- function(data, log = FALSE, n_hab = 1,
     fig3 <- fig3 %>%
       
       layout(title =
-               ifelse(aligned_cases,
-                      paste0(aux_title, " (aligned, day 0 = cum. cases > ",
-                             100 * perc_pop, "% population)"), aux_title),
+               paste(ifelse(aligned_cases,
+                            paste0(aux_title, " (aligned, day 0 = cum. cases > ",
+                                   100 * perc_pop, "% population)"), aux_title),
+                     "\n ", author_source),
              xaxis = list(range =
                             ifelse(aligned_cases, 0:(len_max - 1),
                                    list(min(dates_allowed),
                                         format(Sys.time(), "%Y-%m-%d"))),
                           title =
                             ifelse(aligned_cases, "Days of pandemic", "dates"),
-                                   zeroline = FALSE))
+                                   zeroline = FALSE),
+             plot_bgcolor='rgb(254, 247, 234)',
+             paper_bgcolor='rgb(254, 247, 234)')
 
   }
 
@@ -625,16 +637,19 @@ comparative_countries <- function(data, log = FALSE, n_hab = 1,
     fig4 <- fig4 %>%
       
       layout(title =
-               ifelse(aligned_cases,
-                      paste0(aux_title, " (aligned, day 0 = cum. cases > ",
-                             100 * perc_pop, "% population)"), aux_title),
+               paste(ifelse(aligned_cases,
+                            paste0(aux_title, " (aligned, day 0 = cum. cases > ",
+                                   100 * perc_pop, "% population)"), aux_title),
+                     "\n ", author_source),
              xaxis = list(range =
                             ifelse(aligned_cases, 0:(len_max - 1),
                                    list(min(dates_allowed),
                                         format(Sys.time(), "%Y-%m-%d"))),
                           title =
                             ifelse(aligned_cases, "Days of pandemic", "dates"),
-                                   zeroline = FALSE))
+                                   zeroline = FALSE),
+             plot_bgcolor='rgb(254, 247, 234)',
+             paper_bgcolor='rgb(254, 247, 234)')
 
   }
   
@@ -679,16 +694,19 @@ comparative_countries <- function(data, log = FALSE, n_hab = 1,
     aux_title <- "velocity of growth (% daily growth) of cases"
     fig5 <- fig5 %>% 
       layout(title =
-               ifelse(aligned_cases,
-                      paste0(aux_title, " (aligned, day 0 = cum. cases > ",
-                             100 * perc_pop, "% population)"), aux_title),
+               paste(ifelse(aligned_cases,
+                            paste0(aux_title, " (aligned, day 0 = cum. cases > ",
+                                   100 * perc_pop, "% population)"), aux_title),
+                     "\n ", author_source),
              xaxis = list(range =
                             ifelse(aligned_cases, 0:(len_max - 1),
                                    list(min(dates_allowed),
                                         format(Sys.time(), "%Y-%m-%d"))),
                           title =
                             ifelse(aligned_cases, "Days of pandemic", "dates"),
-                                   zeroline = FALSE))
+                                   zeroline = FALSE),
+             plot_bgcolor='rgb(254, 247, 234)',
+             paper_bgcolor='rgb(254, 247, 234)')
 
   }
 
@@ -733,16 +751,19 @@ comparative_countries <- function(data, log = FALSE, n_hab = 1,
     fig6 <- fig6 %>%
       
       layout(title =
-               ifelse(aligned_cases,
-                      paste0(aux_title, " (aligned, day 0 = cum. cases > ",
-                             100 * perc_pop, "% population)"), aux_title),
+               paste(ifelse(aligned_cases,
+                            paste0(aux_title, " (aligned, day 0 = cum. cases > ",
+                                   100 * perc_pop, "% population)"), aux_title),
+                     "\n ", author_source),
              xaxis = list(range =
                             ifelse(aligned_cases, 0:(len_max - 1),
                                    list(min(dates_allowed),
                                         format(Sys.time(), "%Y-%m-%d"))),
                           title =
                             ifelse(aligned_cases, "Days of pandemic", "dates"),
-                                   zeroline = FALSE))
+                                   zeroline = FALSE),
+             plot_bgcolor='rgb(254, 247, 234)',
+             paper_bgcolor='rgb(254, 247, 234)')
 
   }
   
@@ -789,16 +810,19 @@ comparative_countries <- function(data, log = FALSE, n_hab = 1,
     fig7 <- fig7 %>%
       
       layout(title =
-               ifelse(aligned_cases,
-                      paste0(aux_title, " (aligned, day 0 = cum. cases > ",
-                             100 * perc_pop, "% population)"), aux_title),
+               paste(ifelse(aligned_cases,
+                            paste0(aux_title, " (aligned, day 0 = cum. cases > ",
+                                   100 * perc_pop, "% population)"), aux_title),
+                     "\n ", author_source),
              xaxis = list(range =
                             ifelse(aligned_cases, 0:(len_max - 1),
                                    list(min(dates_allowed),
                                         format(Sys.time(), "%Y-%m-%d"))),
                           title =
                             ifelse(aligned_cases, "Days of pandemic", "dates"),
-                                   zeroline = FALSE))
+                                   zeroline = FALSE),
+             plot_bgcolor='rgb(254, 247, 234)',
+             paper_bgcolor='rgb(254, 247, 234)')
     
   }
   
@@ -843,16 +867,19 @@ comparative_countries <- function(data, log = FALSE, n_hab = 1,
     fig8 <- fig8 %>%
       
       layout(title =
-               ifelse(aligned_cases,
-                      paste0(aux_title, " (aligned, day 0 = cum. cases > ",
-                             100 * perc_pop, "% population)"), aux_title),
+               paste(ifelse(aligned_cases,
+                            paste0(aux_title, " (aligned, day 0 = cum. cases > ",
+                                   100 * perc_pop, "% population)"), aux_title),
+                     "\n ", author_source),
              xaxis = list(range =
                             ifelse(aligned_cases, 0:(len_max - 1),
                                    list(min(dates_allowed),
                                         format(Sys.time(), "%Y-%m-%d"))),
                           title =
                             ifelse(aligned_cases, "Days of pandemic", "dates"),
-                                   zeroline = FALSE))
+                                   zeroline = FALSE),
+             plot_bgcolor='rgb(254, 247, 234)',
+             paper_bgcolor='rgb(254, 247, 234)')
     
   }
   
@@ -897,20 +924,22 @@ comparative_countries <- function(data, log = FALSE, n_hab = 1,
     fig9 <- fig9 %>%
       
       layout(title =
-               ifelse(aligned_cases,
-                      paste0(aux_title, " (aligned, day 0 = cum. cases > ",
-                             100 * perc_pop, "% population)"), aux_title),
+               paste(ifelse(aligned_cases,
+                            paste0(aux_title, " (aligned, day 0 = cum. cases > ",
+                                   100 * perc_pop, "% population)"), aux_title),
+                     "\n ", author_source),
              xaxis = list(range =
                             ifelse(aligned_cases, 0:(len_max - 1),
                                    list(min(dates_allowed),
                                         format(Sys.time(), "%Y-%m-%d"))),
                           title =
                             ifelse(aligned_cases, "Days of pandemic", "dates"),
-                                   zeroline = FALSE))
+                                   zeroline = FALSE),
+             plot_bgcolor='rgb(254, 247, 234)',
+             paper_bgcolor='rgb(254, 247, 234)')
+    
   }
     
-  
-  
   # Comparing with their continents
   if (plot_dev_by_continents) {
     
@@ -1025,64 +1054,76 @@ comparative_countries <- function(data, log = FALSE, n_hab = 1,
                        ifelse(log, "log cases", "cases"))
     fig10 <- fig10 %>%
       layout(title =
-               ifelse(aligned_cases,
-                      paste0(aux_title, " (aligned, day 0 = cum. cases > ",
-                             100 * perc_pop, "% population)"), aux_title),
+               paste(ifelse(aligned_cases,
+                            paste0(aux_title, " (aligned, day 0 = cum. cases > ",
+                                   100 * perc_pop, "% population)"), aux_title),
+                     "\n ", author_source),
              xaxis = list(range =
                             ifelse(aligned_cases, 0:(len_max - 1),
                                    list(min(dates_allowed),
                                         format(Sys.time(), "%Y-%m-%d"))),
                           title =
                             ifelse(aligned_cases, "Days of pandemic", "dates"),
-                          zeroline = FALSE))
+                          zeroline = FALSE),
+             plot_bgcolor='rgb(254, 247, 234)',
+             paper_bgcolor='rgb(254, 247, 234)')
     
     # fig11: layout details
     aux_title <- paste("Daily dev. (resp. to their continentes) of",
                        ifelse(log, "log cases", "deaths"))
     fig11 <- fig11 %>%
       layout(title =
-               ifelse(aligned_cases,
-                      paste0(aux_title, " (aligned, day 0 = cum. cases > ",
-                             100 * perc_pop, "% population)"), aux_title),
+               paste(ifelse(aligned_cases,
+                            paste0(aux_title, " (aligned, day 0 = cum. cases > ",
+                                   100 * perc_pop, "% population)"), aux_title),
+                     "\n ", author_source),
              xaxis = list(range =
                             ifelse(aligned_cases, 0:(len_max - 1),
                                    list(min(dates_allowed),
                                         format(Sys.time(), "%Y-%m-%d"))),
                           title =
                             ifelse(aligned_cases, "Days of pandemic", "dates"),
-                          zeroline = FALSE))
+                          zeroline = FALSE),
+             plot_bgcolor='rgb(254, 247, 234)',
+             paper_bgcolor='rgb(254, 247, 234)')
     
     # fig12: layout details
     aux_title <- paste("Daily dev. (resp. to their continentes) of",
                        ifelse(log, "log cases", "cum. cases"))
     fig12 <- fig12 %>%
       layout(title =
-               ifelse(aligned_cases,
-                      paste0(aux_title, " (aligned, day 0 = cum. cases > ",
-                             100 * perc_pop, "% population)"), aux_title),
+               paste(ifelse(aligned_cases,
+                            paste0(aux_title, " (aligned, day 0 = cum. cases > ",
+                                   100 * perc_pop, "% population)"), aux_title),
+                     "\n ", author_source),
              xaxis = list(range =
                             ifelse(aligned_cases, 0:(len_max - 1),
                                    list(min(dates_allowed),
                                         format(Sys.time(), "%Y-%m-%d"))),
                           title =
                             ifelse(aligned_cases, "Days of pandemic", "dates"),
-                          zeroline = FALSE))
+                          zeroline = FALSE),
+             plot_bgcolor='rgb(254, 247, 234)',
+             paper_bgcolor='rgb(254, 247, 234)')
     
     # fig13: layout details
     aux_title <- paste("Daily dev. (resp. to their continentes) of",
                        ifelse(log, "log cases", "cum. deaths"))
     fig13 <- fig13 %>%
       layout(title =
-               ifelse(aligned_cases,
-                      paste0(aux_title, " (aligned, day 0 = cum. cases > ",
-                             100 * perc_pop, "% population)"), aux_title),
+               paste(ifelse(aligned_cases,
+                            paste0(aux_title, " (aligned, day 0 = cum. cases > ",
+                                   100 * perc_pop, "% population)"), aux_title),
+                     "\n ", author_source),
              xaxis = list(range =
                             ifelse(aligned_cases, 0:(len_max - 1),
                                    list(min(dates_allowed),
                                         format(Sys.time(), "%Y-%m-%d"))),
                           title =
                             ifelse(aligned_cases, "Days of pandemic", "dates"),
-                          zeroline = FALSE))
+                          zeroline = FALSE),
+             plot_bgcolor='rgb(254, 247, 234)',
+             paper_bgcolor='rgb(254, 247, 234)')
 
   }
   
