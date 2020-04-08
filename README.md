@@ -137,7 +137,7 @@ plot_dev_by_continents <- TRUE # A graphic about the data related to their conti
 
 #### Raw ECDC data:
 
-Loading the **dataset (data frame) with the raw data** directly from the [repository of ECDC]. Note that the data is chronologically sorted, the newest on top:
+Loading the **dataset (data frame) with the raw data** directly from the [repository of ECDC](https://www.ecdc.europa.eu/en/publications-data/download-todays-data-geographic-distribution-covid-19-cases-worldwide) . Note that the data is chronologically sorted, the newest on top:
 
 ```R
 ECDC_data$raw_data
@@ -158,7 +158,7 @@ ECDC_data$filter_countries
 
 #### Filtered ECDC data by countries:
 
-Loading the **dataset (data frame) with the raw data** directly from the [repository of ECDC], filtered by countries in `countries` and dates in `dates`. Note that the data is chronologically sorted, the newest on top. For using the i-th country indicated in `countries` variable, please write
+Loading the **dataset (data frame) with the raw data** directly from the [repository of ECDC](https://www.ecdc.europa.eu/en/publications-data/download-todays-data-geographic-distribution-covid-19-cases-worldwide) , filtered by countries in `countries` and dates in `dates`. Note that the data is chronologically sorted, the newest on top. For using the i-th country indicated in `countries` variable, please write
 
 
 ```R
@@ -200,7 +200,7 @@ ECDC_ESP$covid_data$dev_cont_cum_deaths
 
 #### Raw ECDC data by continents:
 
-Loading the **dataset (data frame) with the raw data** directly from [repository of ECDC], but grouped by continents Note that the data is chronologically sorted, the newest on top:
+Loading the **dataset (data frame) with the raw data** directly from [repository of ECDC](https://www.ecdc.europa.eu/en/publications-data/download-todays-data-geographic-distribution-covid-19-cases-worldwide) , but grouped by continents Note that the data is chronologically sorted, the newest on top:
 
 ```R
 ECDC_data$data_by_continents[[1]] # Europe
@@ -329,7 +329,7 @@ graphics_countries$fig_dev_cont_cum_cases # Plotting relative deviations (resp. 
 graphics_countries$fig_dev_cont_cum_deaths # Plotting relative deviations (resp. to their continents) of deaths for each selected country
 ```
 
-**IMPORTANT**: remember that data from [repository of ECDC] is updated a day later, then you are plotting the data from yesterday.
+**IMPORTANT**: remember that data from [repository of ECDC](https://www.ecdc.europa.eu/en/publications-data/download-todays-data-geographic-distribution-covid-19-cases-worldwide) is updated a day later, then you are plotting the data from yesterday.
 
 
 ## PART II: Scripts for exploring and predicting data from pandemic COVID19 in Spain
