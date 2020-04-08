@@ -298,8 +298,6 @@ extracting_ECDC_covid19 <-
 
 
 
-
-
 ##
 ## PLOTS
 ##
@@ -313,7 +311,8 @@ comparative_countries <- function(data, log = FALSE, n_hab = 1,
                                   vel_mult = FALSE, plot_v_cases = TRUE,
                                   plot_v_deaths = TRUE, plot_a_cases = TRUE,
                                   plot_a_deaths = TRUE,
-                                  plot_dev_by_continents = TRUE) {
+                                  plot_dev_by_continents = TRUE,
+                                  comm_mobility = TRUE) {
   
   # Number of countries to be compared and number of variables (column)
   n_countries <- length(data$filter_countries)
@@ -408,6 +407,7 @@ comparative_countries <- function(data, log = FALSE, n_hab = 1,
   # If figures are not plotted, figures are NULL
   fig1 <- fig2 <- fig3 <- fig4 <- fig5 <- fig6 <- NULL
   fig7 <- fig8 <- fig9 <- fig10 <- fig11 <- fig12 <- fig13 <- NULL
+  fig14 <- fig15 <- fig16 <- fig17 <- fig18 <- fig19 <- fig20 <- NULL
   
   author_source <- paste("(source: Spanish Health Ministry,",
                          "graphics by Javier Álvarez Liébana)")
@@ -1127,6 +1127,195 @@ comparative_countries <- function(data, log = FALSE, n_hab = 1,
 
   }
   
+  # Community mobility graphics
+  if (comm_mobility) {
+
+    # Setting classic dark-on-light theme 
+    theme_set(theme_bw()) 
+    
+    # The package rnaturalearth provides a map of countries of the entire world.
+    # Use ne_countries to pull country data and choose the scale
+    # The function can return sp classes (default) or directly sf classes,
+    # as defined in the argument returnclass:
+    world <- ne_countries(scale = "medium", returnclass = "sf")
+    
+    ##
+    ## Preprocess the mobility data
+    ##
+    mobility_data <-
+      read.csv(paste0("https://raw.githubusercontent.com/",
+                      "JavierAlvarezLiebana/COVID19/master/datasets/",
+                      "COVID19_MOBILITY_GOOGLE.csv"))
+    names_var <- names(mobility_data)[3:8] # Names of variables
+    
+    # mob_data is a matrix with countries on rows and variables on columns
+    mob_data <- matrix(0, length(world$name_long), length(names_var))
+    for (i in 1:length(world$name_long)) {
+      
+      if (any(mobility_data$Country %in% world$name_long[i])) {
+        for (j in 1:length(names_var)) {
+          
+          aux <-
+            as.character(mobility_data[which(mobility_data$Country %in%
+                                               world$name_long[i]), j + 2])
+          mob_data[i, j] <- as.numeric(str_remove_all(aux, "%"))
+          
+        }
+      } else { 
+        
+        mob_data[i, ] <- NA
+        
+        }
+    }
+    
+    # Plotting the geographical data for each mobility variable
+    fig14 <- 
+      ggplot(data = world) +  geom_sf(aes(fill = mob_data[, 1])) +
+      xlab("Longitude") + ylab("Latitude") +
+      ggtitle(paste("COVID-19 community mobility compared to baseline",
+                    "(source = Google, graphics by Javier Álvarez Liébana)"),
+              subtitle =
+                paste0("variable: ", names_var[1],", baseline = median",
+                       " during Jan 3–Feb 6, 2020 (",
+                       length(unique(mobility_data$Country)),
+                       " countries, ", "missing values in grey)")) +
+      scale_fill_viridis_c(option = "plasma", na.value = "grey40")
+    
+    fig15 <- 
+      ggplot(data = world) +  geom_sf(aes(fill = mob_data[, 2])) +
+      xlab("Longitude") + ylab("Latitude") +
+      ggtitle(paste("COVID-19 community mobility compared to baseline",
+                    "(source = Google, graphics by Javier Álvarez Liébana)"),
+              subtitle =
+                paste0("variable: ", names_var[2],", baseline = median",
+                       " during Jan 3–Feb 6, 2020 (",
+                       length(unique(mobility_data$Country)),
+                       " countries, ", "missing values in grey)")) +
+      scale_fill_viridis_c(option = "plasma", na.value = "grey40")
+    
+    fig16 <- 
+      ggplot(data = world) +  geom_sf(aes(fill = mob_data[, 3])) +
+      xlab("Longitude") + ylab("Latitude") +
+      ggtitle(paste("COVID-19 community mobility compared to baseline",
+                    "(source = Google, graphics by Javier Álvarez Liébana)"),
+              subtitle =
+                paste0("variable: ", names_var[3],", baseline = median",
+                       " during Jan 3–Feb 6, 2020 (",
+                       length(unique(mobility_data$Country)),
+                       " countries, ", "missing values in grey)")) +
+      scale_fill_viridis_c(option = "plasma", na.value = "grey40")
+    
+    fig17 <- 
+      ggplot(data = world) +  geom_sf(aes(fill = mob_data[, 4])) +
+      xlab("Longitude") + ylab("Latitude") +
+      ggtitle(paste("COVID-19 community mobility compared to baseline",
+                    "(source = Google, graphics by Javier Álvarez Liébana)"),
+              subtitle =
+                paste0("variable: ", names_var[4],", baseline = median",
+                       " during Jan 3–Feb 6, 2020 (",
+                       length(unique(mobility_data$Country)),
+                       " countries, ", "missing values in grey)")) +
+      scale_fill_viridis_c(option = "plasma", na.value = "grey40")
+    
+    fig18 <- 
+      ggplot(data = world) +  geom_sf(aes(fill = mob_data[, 5])) +
+      xlab("Longitude") + ylab("Latitude") +
+      ggtitle(paste("COVID-19 community mobility compared to baseline",
+                    "(source = Google, graphics by Javier Álvarez Liébana)"),
+              subtitle =
+                paste0("variable: ", names_var[5],", baseline = median",
+                       " during Jan 3–Feb 6, 2020 (",
+                       length(unique(mobility_data$Country)),
+                       " countries, ", "missing values in grey)")) +
+      scale_fill_viridis_c(option = "plasma", na.value = "grey40")
+    
+    fig19 <- 
+      ggplot(data = world) +  geom_sf(aes(fill = mob_data[, 6])) +
+      xlab("Longitude") + ylab("Latitude") +
+      ggtitle(paste("COVID-19 community mobility compared to baseline",
+                    "(source = Google, graphics by Javier Álvarez Liébana)"),
+              subtitle =
+                paste0("variable: ", names_var[6],", baseline = median",
+                       " during Jan 3–Feb 6, 2020 (",
+                       length(unique(mobility_data$Country)),
+                       " countries, ", "missing values in grey)")) +
+      scale_fill_viridis_c(option = "plasma", na.value = "grey40")
+    
+    
+    ##
+    ## Comparing top 7 of countries for each variable
+    ##
+    
+    # Preprocessing
+    mob_data_na_omit <- replace(mob_data, is.na(mob_data), 0)
+    sort_data <- apply(mob_data_na_omit, FUN = "order", MARGIN = 2)
+    sort_data[, 6] <- rev(sort_data[, 6])
+    max_values <- matrix(0, 7, length(names_var))
+    name_countries <- list()
+    
+    # Searching the top 7 for each variable
+    for (i in 1:length(names_var)) {
+      
+      max_values[ , i]<- mob_data[sort_data[1:7, i], i]
+      name_countries[[i]] <- world$name_long[sort_data[1:7, i]]
+      
+    }
+    
+    fig20 <- plot_ly()
+    fig20 <- fig20 %>%
+      add_trace (x = ~names_var, y = ~max_values[1, ],
+                 type = 'bar', name = "1st",
+                 text =
+                   lapply(name_countries,
+                          FUN = function(data) { return(data[1]) }),
+                 textposition = 'auto')
+    
+    fig20 <- fig20 %>%
+      add_trace(x = ~names_var, y = ~max_values[2, ], name = "2nd",
+                text =
+                  lapply(name_countries,
+                         FUN = function(data) { return(data[2]) }),
+                textposition = 'auto')
+    fig20 <- fig20 %>%
+      add_trace(x = ~names_var, y = ~max_values[3, ], name = "3rd",
+                text =
+                  lapply(name_countries,
+                         FUN = function(data) { return(data[3]) }),
+                textposition = 'auto')
+    fig20 <- fig20 %>%
+      add_trace(x = ~names_var, y = ~max_values[4, ], name = "4th",
+                text =
+                  lapply(name_countries,
+                         FUN = function(data) { return(data[4]) }),
+                textposition = 'auto')
+    fig20 <- fig20 %>%
+      add_trace(x = ~names_var, y = ~max_values[5, ], name = "5th",
+                text =
+                  lapply(name_countries,
+                         FUN = function(data) { return(data[5]) }),
+                textposition = 'auto')
+    fig20 <- fig20 %>%
+      add_trace(x = ~names_var, y = ~max_values[6, ], name = "6th",
+                text =
+                  lapply(name_countries,
+                         FUN = function(data) { return(data[6]) }),
+                textposition = 'auto')
+    fig20 <- fig20 %>%
+      add_trace(x = ~names_var, y = ~max_values[7, ], name = "7th",
+                text =
+                  lapply(name_countries,
+                         FUN = function(data) { return(data[7]) }),
+                textposition = 'auto')
+    fig20 <- fig20 %>%
+      layout(title = paste("COVID-19 community mobility compared to baseline",
+                           "(median) during Jan 3–Feb 6 2020\n",
+                           "(source: Google, graphics by Javier Álvarez Liébana)"),
+             xaxis = list(title = 'Mobility aspects'),
+             yaxis = list(title = 'Mobility changes compared to baseline (median)'),
+             barmode = 'group')
+    
+  }
+  
   # Output figures
   return(list("fig_cases" = fig1, "fig_deaths" = fig2,
               "fig_cum_cases" = fig3, "fig_cum_deaths" = fig4,
@@ -1134,7 +1323,11 @@ comparative_countries <- function(data, log = FALSE, n_hab = 1,
               "fig_acc_cases" = fig7, "fig_acc_deaths" = fig8,
               "fig_mort_rate" = fig9, "fig_dev_cont_cases" = fig10,
               "fig_dev_cont_deaths" = fig11, "fig_dev_cont_cum_cases" = fig12,
-              "fig_dev_cont_cum_deaths" = fig13))
+              "fig_dev_cont_cum_deaths" = fig13,
+              "fig_mobi_retail_recre" = fig14, "fig_mobi_grocery_phar" = fig15,
+              "fig_mobi_parks" = fig16, "fig_mobi_transit" = fig17,
+              "fig_mobi_workplaces" = fig18, "fig_mobi_resident" = fig19,
+              "fig_mobi_top7" = fig20))
 }
 
 

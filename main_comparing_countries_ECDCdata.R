@@ -9,6 +9,23 @@ if(!require(plotly)) install.packages("plotly", repos = repos)
 if(!require(RColorBrewer)) install.packages("RColorBrewer", repos = repos)
 if(!require(readxl)) install.packages("readxl", repos = repos)
 if(!require(utils)) install.packages("utils", repos = repos)
+if(!require(ggplot2)) install.packages("ggplot2", repos = repos)
+if(!require(rgdal)) install.packages("rgdal", repos = repos,
+                                     configure.args =
+                                       c("--with-proj-lib=/usr/local/lib/",
+                                         "--with-proj-include=/usr/local/include/"))
+if(!require(sf)) install.packages("sf", repos = repos,
+                                  configure.args =
+                                    "--with-proj-lib=/usr/local/lib/")
+if(!require(rnaturalearth)) install.packages("rnaturalearth", repos = repos)
+if(!require(rnaturalearthdata)) install.packages("rnaturalearthdata",
+                                                 repos = repos)
+if(!require(geometry)) install.packages("geometry", repos = repos)
+if(!require(maps)) install.packages("maps", repos = repos)
+if(!require(rgeos)) install.packages("rgeos", repos = repos)
+if(!require(tidyverse)) install.packages("tidyverse", repos = repos)
+if(!require(stringr)) install.packages("stringr", repos = repos)
+
 
 # DO NOT CHANGE: Source files, my own codes that we will need
 setwd(dirname(rstudioapi::getSourceEditorContext()$path))
@@ -31,7 +48,7 @@ source('./countries_by_continents.R')
 # IRL ITA JPN LUX MEX NLD NOR PER POL PRT RUS SEN KOR ESP SWE TUR GBR USA VEN
 
 countries <- c("ESP", "ITA", "BOL", "ARG", "DEU", "GBR",
-               "PRT", "JPN", "MEX", "USA", "SGP") 
+               "PRT", "JPN", "MEX", "USA", "MNG") 
 
 # LOG: Do you want data in the original scale or in the log scale?
 log <- FALSE # If log <- TRUE, cases and deaths are plotted in log scale
@@ -67,7 +84,7 @@ plot_v_deaths <- TRUE # A graphic about the % growth (velocity) of deaths? TRUE/
 plot_a_cases <- TRUE # A graphic about the % growth of velocity of cases (acceleration)? TRUE/FALSE
 plot_a_deaths <- TRUE # A graphic about the % growth of velocity of deaths (acceleration)? TRUE/FALSE
 plot_dev_by_continents <- TRUE # A graphic about the data related to their continents
-
+comm_mobility <- TRUE # Graphics related with Community Mobility Reports (source: Google)
 
 
 
@@ -140,6 +157,7 @@ graphics_countries <-
                         plot_v_deaths = plot_v_deaths,
                         plot_a_cases = plot_a_cases,
                         plot_a_deaths = plot_a_deaths,
-                        plot_dev_by_continents = plot_dev_by_continents)
+                        plot_dev_by_continents = plot_dev_by_continents,
+                        comm_mobility = comm_mobility)
 
 
