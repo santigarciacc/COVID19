@@ -23,7 +23,7 @@ The code available is composed of **three code files and two datasets**:
 
 - **updated_data.RData**: raw dataset directly extracted from [repository of ECDC](https://www.ecdc.europa.eu/en/publications-data/download-todays-data-geographic-distribution-covid-19-cases-worldwide) (see [updated_data](https://github.com/JavierAlvarezLiebana/COVID19/blob/master/datasets/updated_data.RData))
 
-- **COVID19_MOBILITY_GOOGLE.csv**: dataset with the whole **data included in the Community Mobility Reports by Google**, extracted from [repository Google](https://medium.com/dataquehabla/datos-movilidad-google-covid19-b3d30ef5b171), in which the **decrease (% in negative) of the mobility**, related to different categories (**workspaces, transit stations, grocery, residentials, parks, and retail and recreation**), for a set of 131 countries (see [csv file](https://github.com/JavierAlvarezLiebana/COVID19/blob/master/datasets/COVID19_MOBILITY_GOOGLE.csv) for downloading)
+- **COVID19_MOBILITY_GOOGLE.csv**: dataset with the whole **data included in the Community Mobility Reports by Google**, extracted from [repository Google](https://medium.com/dataquehabla/datos-movilidad-google-covid19-b3d30ef5b171), in which the **decrease (% in negative) of the mobility**, related to different categories (**workspaces, transit stations, grocery, residentials, parks, and retail and recreation**), for a set of 131 countries (see [csv file](https://github.com/JavierAlvarezLiebana/COVID19/blob/master/datasets/COVID19_MOBILITY_GOOGLE.csv) for downloading). Decreases are measured compared with the **baseline (median)** collected during Jan 3 – Feb 6 2020.
 
 
 
