@@ -23,7 +23,7 @@ The code available is composed of **three code files and two datasets**:
 
 - **updated_data.RData**: raw dataset directly extracted from [repository of ECDC](https://www.ecdc.europa.eu/en/publications-data/download-todays-data-geographic-distribution-covid-19-cases-worldwide) (see [updated_data](https://github.com/JavierAlvarezLiebana/COVID19/blob/master/datasets/updated_data.RData))
 
-- **COVID19_MOBILITY_GOOGLE.csv**: dataset with the whole **data included in the Community Mobility Reports by Google**, extracted from [repository Google](https://medium.com/dataquehabla/datos-movilidad-google-covid19-b3d30ef5b171), in which the **decrease (% in negative) of the mobility**, related to different categories (**workspaces, transit stations, grocery, residentials, parks, and retail and recreation**), for a set of 131 countries (see [csv file](https://github.com/JavierAlvarezLiebana/COVID19/blob/master/datasets/COVID19_MOBILITY_GOOGLE.csv) for downloading). Decreases are measured compared with the **baseline (median)** collected during Jan 3 – Feb 6 2020.
+- **COVID19_MOBILITY_GOOGLE.csv**: dataset with the whole **data included in the Community Mobility Reports by Google**, extracted from [repository Google](https://medium.com/dataquehabla/datos-movilidad-google-covid19-b3d30ef5b171), in which the **decrease (% in negative) of the mobility**, related to different categories (**workspaces, transit stations, grocery, residentials, parks, and retail and recreation**), for a set of 131 countries (see [csv file](https://github.com/JavierAlvarezLiebana/COVID19/blob/master/datasets/COVID19_MOBILITY_GOOGLE.csv) for downloading). Decreases are measured compared with the **baseline (median)** collected during Jan 3 – Feb 6 2020. Reports is weekly updated and data is from approximately 2-3 days prior.
 
 
 
@@ -116,6 +116,7 @@ Which graphics do you want to be plotted?
 - **plot_a_cases**: do you want a graphic plotting the **% growth of velocity (acceleration) of cases** `TRUE` or not `FALSE`?
 - **plot_a_deaths**: do you want a graphic plotting the **% growth of velocity (acceleration) of deaths** `TRUE` or not `FALSE`?
 - **plot_dev_by_continents**: do you want a graphic plotting the **cases and deaths (and their cumulatives) in comparison with their continets** (by habitants) `TRUE` or not `FALSE`?
+- **plot_comm_mobility**: do you want a set of graphics plotting how the mobility has decreased for a set of countries? Data has been extracted from [Google's repository](https://medium.com/dataquehabla/datos-movilidad-google-covid19-b3d30ef5b171), in which the **decrease (% in negative) of the mobility**, related to different categories (**workspaces, transit stations, grocery, residentials, parks, and retail and recreation**), for a set of 131 countries. Decreases are measured compared with the **baseline (median)** collected during Jan 3 – Feb 6 2020. A set of **7 graphics are plotted**: one for each category, and them one **bar plot displaying the top 7 countries with stronger lockdown measures**, for each category.
 
 ```R
 # PLOT_CASES, PLOT_DEATHS, PLOT_CUM_CASES, PLOT_CUM_DEATHS, PLOT_MORT_RATE
@@ -131,6 +132,8 @@ plot_v_deaths <- TRUE # A graphic about the % growth (velocity) of deaths? TRUE/
 plot_a_cases <- TRUE # A graphic about the % growth of velocity of cases (acceleration)? TRUE/FALSE
 plot_a_deaths <- TRUE # A graphic about the % growth of velocity of deaths (acceleration)? TRUE/FALSE
 plot_dev_by_continents <- TRUE # A graphic about the data related to their continents
+plot_comm_mobility <- TRUE # Graphics related with Community Mobility Reports (source: Google)
+
 ```
 
 ### Examples of using the datasets (after executing the code):
@@ -328,6 +331,43 @@ graphics_countries$fig_dev_cont_cum_cases # Plotting relative deviations (resp. 
 ```R
 graphics_countries$fig_dev_cont_cum_deaths # Plotting relative deviations (resp. to their continents) of deaths for each selected country
 ```
+
+```R
+graphics_countries$fig_mobi_retail_recre # Plotting a map with the decrease of mobility related with retail and recreative activities
+```
+
+![Plotting a map with the decrease of mobility related with retail and recreative](https://github.com/JavierAlvarezLiebana/COVID19/blob/master/figures/retail_google.jpg)
+
+
+
+```R
+graphics_countries$fig_mobi_grocery_phar # Plotting a map with the decrease of mobility related with groceries and pharmacies
+```
+
+```R
+graphics_countries$fig_mobi_parks # Plotting a map with the decrease of mobility related with parks and gardens
+```
+
+```R
+graphics_countries$fig_mobi_transit # Plotting a map with the decrease of mobility related with transit stations
+```
+
+```R
+graphics_countries$fig_mobi_workspaces # Plotting a map with the decrease of mobility related with workspaces
+```
+
+```R
+graphics_countries$fig_mobi_resident # Plotting a map with the decrease of mobility related with residential areas
+```
+
+
+```R
+graphics_countries$fig_mobi_top7 # Plotting a bar plot with the top 7 countries with stronger lockdown measures
+```
+
+![Plotting a bar plot with the top 7 countries with stronger lockdown measures](https://github.com/JavierAlvarezLiebana/COVID19/blob/master/figures/google_mobi_top7.jpeg)
+
+
 
 **IMPORTANT**: remember that data from [repository of ECDC](https://www.ecdc.europa.eu/en/publications-data/download-todays-data-geographic-distribution-covid-19-cases-worldwide) is updated a day later, then you are plotting the data from yesterday.
 
