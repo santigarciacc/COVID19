@@ -110,7 +110,8 @@ Which graphics do you want to be plotted?
 - **plot_deaths**: do you want a graphic plotting the **daily deaths** `TRUE` or not `FALSE`?
 - **plot_cum_cases**: do you want a graphic plotting the **cum cases** `TRUE` or not `FALSE`?
 - **plot_cum_deaths**: do you want a graphic plotting the **cum deaths** `TRUE` or not `FALSE`?
-- **plot_morth_rate**: do you want a graphic plotting the **daily mortality rate** (cum deaths / cum cases) `TRUE` or not `FALSE`?
+- **plot_mort_rate**: do you want a graphic plotting the **daily mortality rate** (cum deaths / population) `TRUE` or not `FALSE`?
+- **plot_fat_rate**: do you want a graphic plotting the **daily updated fatality rate** (cum deaths / cum cases) `TRUE` or not `FALSE`?
 - **plot_v_cases**: do you want a graphic plotting the **% growth (velocity) of cases** `TRUE` or not `FALSE`?
 - **plot_v_deaths**: do you want a graphic plotting the **% growth (velocity) of deaths** `TRUE` or not `FALSE`?
 - **plot_a_cases**: do you want a graphic plotting the **% growth of velocity (acceleration) of cases** `TRUE` or not `FALSE`?
@@ -124,7 +125,9 @@ plot_cases <- TRUE # A graphic about the daily cases? TRUE/FALSE
 plot_deaths <- TRUE # A graphic about the daily deaths? TRUE/FALSE
 plot_cum_cases <- TRUE # A graphic about the cum. cases? TRUE/FALSE
 plot_cum_deaths <- TRUE # A graphic about the cum. deaths? TRUE/FALSE
+plot_fat_rate <- TRUE # A graphic about the fatality rate (cum deaths / cum cases)? TRUE/FALSE
 plot_mort_rate <- TRUE # A graphic about the mortality rate (cum deaths / cum cases)? TRUE/FALSE
+
 
 # PLOT_V_CASES, PLOT_V_DEATHS, PLOT_A_CASES, PLOT_A_DEATHS
 plot_v_cases <- TRUE # A graphic about the % growth (velocity) of cases? TRUE/FALSE
@@ -189,7 +192,8 @@ ECDC_ESP$covid_data$vel_cases # % daily growth of cases
 ECDC_ESP$covid_data$vel_deaths # % daily growth of deaths
 ECDC_ESP$covid_data$acc_cases # % daily growth of growth (acceleration) of cases
 ECDC_ESP$covid_data$acc_deaths # % daily growth of growth (acceleration) of deaths
-ECDC_ESP$covid_data$mort_rate # Daily mortality rate
+ECDC_ESP$covid_data$mort_rate # Daily updated fatality rate
+ECDC_ESP$covid_data$mort_rate # Daily updated mortality rate
 
 # Relative errors respect to the continent data: (country - continent)/continent
 ECDC_ESP$covid_data$dev_cont_cases 
@@ -313,7 +317,11 @@ graphics_countries$fig_acc_deaths # Plotting the acceleration of deaths for each
 ```
 
 ```R
-graphics_countries$fig_mort_rate # Plotting the daily mortality rate for each selected country
+graphics_countries$fig_mort_rate # Plotting the daily updated fatality rate for each selected country
+```
+
+```R
+graphics_countries$fig_mort_rate # Plotting the daily updated mortality rate for each selected country
 ```
 
 ```R
