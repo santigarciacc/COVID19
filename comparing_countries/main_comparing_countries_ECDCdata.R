@@ -47,8 +47,8 @@ source('./countries_by_continents.R')
 # CHL CHN COL CUB CZE DNK ECU EGY SLV EST SWZ ETH FIN FRA DEU GRC ISL IND IRN
 # IRL ITA JPN LUX MEX NLD NOR PER POL PRT RUS SEN KOR ESP SWE TUR GBR USA VEN
 
-countries <- c("ESP", "ITA", "BOL", "ARG", "DEU", "GBR",
-               "PRT", "JPN", "MEX", "USA", "MNG") 
+countries <- c("ESP", "ITA", "CHL", "ARG", "DEU", "GBR",
+               "PRT", "FRA", "BEL", "USA", "MEX") 
 
 # LOG: Do you want data in the original scale or in the log scale?
 log <- FALSE # If log <- TRUE, cases and deaths are plotted in log scale
@@ -76,7 +76,8 @@ plot_cases <- TRUE # A graphic about the daily cases? TRUE/FALSE
 plot_deaths <- TRUE # A graphic about the daily deaths? TRUE/FALSE
 plot_cum_cases <- TRUE # A graphic about the cum. cases? TRUE/FALSE
 plot_cum_deaths <- TRUE # A graphic about the cum. deaths? TRUE/FALSE
-plot_mort_rate <- TRUE # A graphic about the mortality rate (cum deaths / cum cases)? TRUE/FALSE
+plot_fat_rate <- TRUE # A graphic about the fatality rate (cum deaths / cum cases)? TRUE/FALSE
+plot_mort_rate <- TRUE # A graphic about the mortality rate (cum deaths / population)? TRUE/FALSE
 
 # PLOT_V_CASES, PLOT_V_DEATHS, PLOT_A_CASES, PLOT_A_DEATHS
 plot_v_cases <- TRUE # A graphic about the % growth (velocity) of cases? TRUE/FALSE
@@ -84,7 +85,7 @@ plot_v_deaths <- TRUE # A graphic about the % growth (velocity) of deaths? TRUE/
 plot_a_cases <- TRUE # A graphic about the % growth of velocity of cases (acceleration)? TRUE/FALSE
 plot_a_deaths <- TRUE # A graphic about the % growth of velocity of deaths (acceleration)? TRUE/FALSE
 plot_dev_by_continents <- TRUE # A graphic about the data related to their continents
-comm_mobility <- TRUE # Graphics related with Community Mobility Reports (source: Google)
+plot_comm_mobility <- TRUE # Graphics related with Community Mobility Reports (source: Google)
 
 
 
@@ -152,12 +153,13 @@ graphics_countries <-
                         plot_cases = plot_cases, plot_deaths = plot_deaths,
                         plot_cum_cases = plot_cum_cases,
                         plot_cum_deaths = plot_cum_deaths,
+                        plot_fat_rate = plot_fat_rate,
                         plot_mort_rate = plot_mort_rate,
                         plot_v_cases = plot_v_cases,
                         plot_v_deaths = plot_v_deaths,
                         plot_a_cases = plot_a_cases,
                         plot_a_deaths = plot_a_deaths,
                         plot_dev_by_continents = plot_dev_by_continents,
-                        comm_mobility = comm_mobility)
+                        plot_comm_mobility = plot_comm_mobility)
 
 

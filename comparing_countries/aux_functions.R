@@ -56,10 +56,15 @@ filtering_data_covid19 <-
                                                FUN = "%in%", countries_by_cont)],
              "population" = raw_data$popData2018[country_indexes[1]])
       
+      # Fatality rate
+      output_list[[c]]$covid_data$fat_rate <-
+        output_list[[c]]$covid_data$cum_deaths /
+        output_list[[c]]$covid_data$cum_cases
+      
       # Mortality rate
       output_list[[c]]$covid_data$mort_rate <-
         output_list[[c]]$covid_data$cum_deaths /
-        output_list[[c]]$covid_data$cum_cases
+        output_list[[c]]$population
         
       # Providing the velocity of the growth (acceleration) of cases
       aux_acc_cases <- rev(rev(output_list[[c]]$covid_data$vel_cases)[-1]) /
@@ -191,7 +196,7 @@ extracting_ECDC_covid19 <-
                               "cum_cases" = rev(cumsum(rev(global_cases))),
                               "deaths" = global_deaths,
                               "cum_deaths" = rev(cumsum(rev(global_deaths))),
-                              "mort_rate" = rev(cumsum(rev(global_deaths))) /
+                              "fat_rate" = rev(cumsum(rev(global_deaths))) /
                                 rev(cumsum(rev(global_cases))))
     
     # Computing the indexes of the first row for each country
@@ -253,10 +258,10 @@ extracting_ECDC_covid19 <-
                                    "cum_cases" = rev(cumsum(rev(cases))),
                                    "deaths" = deaths,
                                    "cum_deaths" = rev(cumsum(rev(deaths))),
-                                   "mort_rate" = rev(cumsum(rev(deaths))) /
+                                   "fat_rate" = rev(cumsum(rev(deaths))) /
                                      rev(cumsum(rev(cases))))
-      continent_data$mort_rate <- replace(continent_data$mort_rate,
-                                          is.na(continent_data$mort_rate), 0)
+      continent_data$fat_rate <- replace(continent_data$fat_rate,
+                                          is.na(continent_data$fat_rate), 0)
       
       # Providing data.frame
       data_by_continents[[i]] <-
@@ -308,11 +313,12 @@ comparative_countries <- function(data, log = FALSE, n_hab = 1,
                                   plot_cases = TRUE, plot_deaths = TRUE,
                                   plot_cum_cases = TRUE, plot_cum_deaths = TRUE,
                                   plot_mort_rate = TRUE,
+                                  plot_fat_rate = TRUE,
                                   vel_mult = FALSE, plot_v_cases = TRUE,
                                   plot_v_deaths = TRUE, plot_a_cases = TRUE,
                                   plot_a_deaths = TRUE,
                                   plot_dev_by_continents = TRUE,
-                                  comm_mobility = TRUE) {
+                                  plot_comm_mobility = TRUE) {
   
   # Number of countries to be compared and number of variables (column)
   n_countries <- length(data$filter_countries)
@@ -883,7 +889,7 @@ comparative_countries <- function(data, log = FALSE, n_hab = 1,
     
   }
   
-  if (plot_mort_rate) {
+  if (plot_fat_rate) {
 
     for (i in 1:length(data$filter_countries)) {
 
@@ -892,7 +898,7 @@ comparative_countries <- function(data, log = FALSE, n_hab = 1,
         fig9 <-
           plot_ly(data = data$filter_data[[i]]$covid_data,
                   x = ~date,
-                  y = data$filter_data[[i]]$covid_data$mort_rate,
+                  y = data$filter_data[[i]]$covid_data$fat_rate,
                   name = data$filter_countries[i],
                   colors = brewer.pal(n = length(data$filter_countries),
                                       name = "RdBu"),
@@ -906,7 +912,7 @@ comparative_countries <- function(data, log = FALSE, n_hab = 1,
         fig9 <-
           fig9 %>% add_trace(data = data$filter_data[[i]]$covid_data,
                              x = ~date,
-                             y = data$filter_data[[i]]$covid_data$mort_rate,
+                             y = data$filter_data[[i]]$covid_data$fat_rate,
                              name = data$filter_countries[i],
                              type = 'scatter', mode = 'markers+lines',
                              colors =
@@ -916,12 +922,67 @@ comparative_countries <- function(data, log = FALSE, n_hab = 1,
                                list(symbol = rand_markers[i], size = 8.5,
                                     line = list(width = 2)))
 
+        }
       }
-    }
+    
+    # Layout details
+    aux_title <- "Fatality rates (cumulative deaths / cumulative cases)"
+    fig9 <- fig9 %>%
+      layout(title =
+               paste(ifelse(aligned_cases,
+                            paste0(aux_title, " (aligned, day 0 = cum. cases > ",
+                                   100 * perc_pop, "% population)"), aux_title),
+                     "\n ", author_source),
+             xaxis = list(range =
+                            ifelse(aligned_cases, 0:(len_max - 1),
+                                   list(min(dates_allowed),
+                                        format(Sys.time(), "%Y-%m-%d"))),
+                          title =
+                            ifelse(aligned_cases, "Days of pandemic", "dates"),
+                          zeroline = FALSE),
+             plot_bgcolor='rgb(254, 247, 234)',
+             paper_bgcolor='rgb(254, 247, 234)')
+  }
+    
+    if (plot_mort_rate) {
+      
+      for (i in 1:length(data$filter_countries)) {
+        
+        if (i == 1) {
+          
+          fig9a <-
+            plot_ly(data = data$filter_data[[i]]$covid_data,
+                    x = ~date,
+                    y = data$filter_data[[i]]$covid_data$mort_rate,
+                    name = data$filter_countries[i],
+                    colors = brewer.pal(n = length(data$filter_countries),
+                                        name = "RdBu"),
+                    type = 'scatter', mode = 'markers+lines',
+                    marker = list(symbol = rand_markers[i], size = 8.5,
+                                  line = list(width = 2)))
+          
+        }
+        else {
+          
+          fig9a <-
+            fig9a %>% add_trace(data = data$filter_data[[i]]$covid_data,
+                               x = ~date,
+                               y = data$filter_data[[i]]$covid_data$mort_rate,
+                               name = data$filter_countries[i],
+                               type = 'scatter', mode = 'markers+lines',
+                               colors =
+                                 brewer.pal(n = length(data$filter_countries),
+                                            name = "RdBu"),
+                               marker =
+                                 list(symbol = rand_markers[i], size = 8.5,
+                                      line = list(width = 2)))
+          
+        }
+      }
 
     # Layout details
-    aux_title <- "Mortality rates (cumulative deaths / cumulative cases)"
-    fig9 <- fig9 %>%
+    aux_title <- "Mortality rates (cumulative deaths / population)"
+    fig9a <- fig9a %>%
       
       layout(title =
                paste(ifelse(aligned_cases,
@@ -1128,7 +1189,7 @@ comparative_countries <- function(data, log = FALSE, n_hab = 1,
   }
   
   # Community mobility graphics
-  if (comm_mobility) {
+  if (plot_comm_mobility) {
 
     # Setting classic dark-on-light theme 
     theme_set(theme_bw()) 
@@ -1321,7 +1382,8 @@ comparative_countries <- function(data, log = FALSE, n_hab = 1,
               "fig_cum_cases" = fig3, "fig_cum_deaths" = fig4,
               "fig_vel_cases" = fig5, "fig_vel_deaths" = fig6,
               "fig_acc_cases" = fig7, "fig_acc_deaths" = fig8,
-              "fig_mort_rate" = fig9, "fig_dev_cont_cases" = fig10,
+              "fig_fat_rate" = fig9, "fig_mort_rate" = fig9a,
+              "fig_dev_cont_cases" = fig10,
               "fig_dev_cont_deaths" = fig11, "fig_dev_cont_cum_cases" = fig12,
               "fig_dev_cont_cum_deaths" = fig13,
               "fig_mobi_retail_recre" = fig14, "fig_mobi_grocery_phar" = fig15,
