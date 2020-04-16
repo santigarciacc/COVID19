@@ -46,7 +46,10 @@ preproc_data_spa <- function(raw_data, var_names =
 #
 plot_descriptive_curves <-
   function(data, population, data_male = NULL, data_female = NULL,
-           suscep = FALSE, threshold = 0.002, by_sex = FALSE, plot_vel = TRUE) {
+           data_by_age_sex = NULL,
+           suscep = FALSE, threshold = 0.003, ma_lag = 7,
+           by_sex = FALSE, plot_vel = TRUE, plot_pop_pyram = TRUE,
+           pop_pyram_by_sex = FALSE) {
     
     # Filtering since cumulative cases are greater than (threshold*100)% of
     # current cum cases
@@ -107,6 +110,15 @@ plot_descriptive_curves <-
                                        line = list(color = 'rgba(33, 5, 75, 1)',
                                                    width = 1.5)),
                                 offsetgroup = suscep + 3, yaxis = "y")
+    fig_raw_data <-
+      fig_raw_data %>% add_bars(x = filter_data$fechas,
+                                y = filter_data$altas_acum,
+                                name = 'Confirmed discharges',
+                                marker =
+                                  list(color = 'rgba(5, 81, 13, 0.8)',
+                                       line = list(color = 'rgba(33, 5, 75, 1)',
+                                                   width = 1.5)),
+                                offsetgroup = suscep + 4, yaxis = "y")
     
     # Layout
     fig_raw_data <- fig_raw_data %>%
@@ -128,6 +140,317 @@ plot_descriptive_curves <-
                            bordercolor = 'rgba(255, 255, 255, 1)',
                            x = 1.1, y = 1), barmode = 'group', bargap = 0.08,
              margin = list(b = 100)) %>%
+      add_annotations(bgcolor = 'rgba(126, 235, 148, 0.25)',
+                      x = 0.01, y = 0.99, text = "NOTES:",
+                      showarrow = FALSE, xref = 'paper', yref = 'paper',
+                      font = list(color = 'rgba(8, 8, 8, 1)',
+                                  size = 18))  %>%
+      add_annotations(bgcolor = 'rgba(126, 235, 148, 0.25)',
+                      x = 0.07, y = 0.9,
+                      text = "09/03: closing schools in Madrid",
+                      showarrow = FALSE, xref = 'paper', yref = 'paper',
+                      font = list(color = 'rgba(8, 8, 8, 1)',
+                                  size = 12))  %>%
+      add_annotations(bgcolor = 'rgba(126, 235, 148, 0.25)',
+                      x = 0.07, y = 0.84,
+                      text = "10/03: closing schools in Vitoria",
+                      showarrow = FALSE, xref = 'paper', yref = 'paper',
+                      font = list(color = 'rgba(8, 8, 8, 1)',
+                                  size = 12))  %>%
+      add_annotations(bgcolor = 'rgba(126, 235, 148, 0.25)',
+                      x = 0.07, y = 0.78,
+                      text = "10/03: cancelled flights from Italy",
+                      showarrow = FALSE, xref = 'paper', yref = 'paper',
+                      font = list(color = 'rgba(8, 8, 8, 1)',
+                                  size = 12))  %>%
+      add_annotations(bgcolor = 'rgba(126, 235, 148, 0.25)',
+                      x = 0.07, y = 0.72,
+                      text = "14/03: lockdown",
+                      showarrow = FALSE, xref = 'paper', yref = 'paper',
+                      font = list(color = 'rgba(8, 8, 8, 1)',
+                                  size = 12))  %>%
+      add_annotations(bgcolor = 'rgba(126, 235, 148, 0.25)',
+                      x = 0.07, y = 0.635,
+                      text = "28/03: extreme lockdown: only essential workers",
+                      showarrow = FALSE, xref = 'paper', yref = 'paper',
+                      font = list(color = 'rgba(8, 8, 8, 1)',
+                                  size = 12))  %>%
+      add_annotations(bgcolor = 'rgba(126, 235, 148, 0.25)',
+                      x = 0.07, y = 0.57,
+                      text = "13/04: normal lockdown again",
+                      showarrow = FALSE, xref = 'paper', yref = 'paper',
+                      font = list(color = 'rgba(8, 8, 8, 1)',
+                                  size = 12)) 
+    
+    
+    ##
+    ## Smoothed graphics for daily data
+    ##
+    
+    # Filtering since cumulative cases are greater than 200
+    filter_data2 <- data[data$casos_acum > 200, ]
+    
+    # Smoothing moving average: daily cases
+    variable <- filter_data2$casos_diarios
+    smooth_ma_cases <- rep(0, length(variable))
+    for (i in ma_lag:length(variable)) {
+      
+      smooth_ma_cases[i] <- mean(variable[(i - ma_lag + 1):i])
+      
+    }
+    
+    # Smoothing moving average: discharges
+    variable <- filter_data2$altas_diarios
+    smooth_ma_discharges <- rep(0, length(variable))
+    for (i in ma_lag:length(variable)) {
+      
+      smooth_ma_discharges[i] <- mean(variable[(i - ma_lag + 1):i])
+      
+    }
+    
+    # Smoothing moving average: daily deaths
+    variable <- filter_data2$fallecimientos_diarios
+    smooth_ma_deaths <- rep(0, length(variable))
+    for (i in ma_lag:length(variable)) {
+      
+      smooth_ma_deaths[i] <- mean(variable[(i - ma_lag + 1):i])
+      
+    }
+
+    
+    fig2_raw_data <- plot_ly()
+    fig2_raw_data <-
+      fig2_raw_data %>%
+      add_bars(x = filter_data2$fechas, y = filter_data2$casos_diarios,
+               name = 'New (confirmed) cases',
+               marker = list(color = 'rgba(231, 208, 3, 0.7)',
+                             line = list(color = 'rgba(33, 5, 75, 1)',
+                                         width = 1.5)),
+               offsetgroup = 1, yaxis = "y")
+    
+    fig2_raw_data <-
+      fig2_raw_data %>%
+      add_bars(x = filter_data2$fechas, y = filter_data2$altas_diarios,
+               name = 'New (confirmed) discharges',
+               marker = list(color = 'rgba(114, 178, 242, 0.8)',
+                             line = list(color = 'rgba(33, 5, 75, 1)',
+                                         width = 1.3)),
+               offsetgroup = 2, yaxis = "y")
+    
+    fig2_raw_data <-
+      fig2_raw_data %>%
+      add_bars(x = filter_data2$fechas, y = filter_data2$fallecimientos_diarios,
+               name = 'New (confirmed) deaths',
+               marker = list(color = 'rgba(232, 93, 95, 0.8)',
+                             line = list(color = 'rgba(33, 5, 75, 1)',
+                                         width = 1.5)),
+               offsetgroup = 3, yaxis = "y")
+    
+    # Layout
+    fig2_raw_data <- fig2_raw_data %>%
+      layout(title =
+               paste0("New daily cases, deaths and discharges in Spain, ",
+                      "source: Datadista Github repository\n",
+                      "Graphics by Javier Álvarez Liébana"),
+             xaxis = list(title = "Dates",
+                          tickfont = list(size = 14,
+                                          color = 'rgb(107, 107, 107)'),
+                          tickangle = -45),
+             yaxis = list(title = "Amount of people",
+                          titlefont = list(size = 16,
+                                           color = 'rgb(107, 107, 107)'),
+                          tickfont = list(size = 14,
+                                          color = 'rgb(107, 107, 107)'),
+                          side = "right"),
+             legend = list(bgcolor = I('gray70'),
+                           bordercolor = 'rgba(255, 255, 255, 1)',
+                           x = 1.1, y = 1), barmode = 'group', bargap = 0.08,
+             margin = list(b = 100)) %>%
+      add_annotations(bgcolor = 'rgba(126, 235, 148, 0.25)',
+                      x = 0.005, y = 0.99, text = "NOTES:",
+                      showarrow = FALSE, xref = 'paper', yref = 'paper',
+                      font = list(color = 'rgba(8, 8, 8, 1)',
+                                  size = 18))  %>%
+      add_annotations(bgcolor = 'rgba(126, 235, 148, 0.25)',
+                      x = 0.015, y = 0.9,
+                      text = "09/03: closing schools in Madrid",
+                      showarrow = FALSE, xref = 'paper', yref = 'paper',
+                      font = list(color = 'rgba(8, 8, 8, 1)',
+                                  size = 12))  %>%
+      add_annotations(bgcolor = 'rgba(126, 235, 148, 0.25)',
+                      x = 0.015, y = 0.84,
+                      text = "10/03: closing schools in Vitoria",
+                      showarrow = FALSE, xref = 'paper', yref = 'paper',
+                      font = list(color = 'rgba(8, 8, 8, 1)',
+                                  size = 12))  %>%
+      add_annotations(bgcolor = 'rgba(126, 235, 148, 0.25)',
+                      x = 0.015, y = 0.78,
+                      text = "10/03: cancelled flights from Italy",
+                      showarrow = FALSE, xref = 'paper', yref = 'paper',
+                      font = list(color = 'rgba(8, 8, 8, 1)',
+                                  size = 12))  %>%
+      add_annotations(bgcolor = 'rgba(126, 235, 148, 0.25)',
+                      x = 0.015, y = 0.72,
+                      text = "14/03: lockdown",
+                      showarrow = FALSE, xref = 'paper', yref = 'paper',
+                      font = list(color = 'rgba(8, 8, 8, 1)',
+                                  size = 12))  %>%
+      add_annotations(bgcolor = 'rgba(126, 235, 148, 0.25)',
+                      x = 0.015, y = 0.635,
+                      text = "28/03: extreme lockdown: just essential workers",
+                      showarrow = FALSE, xref = 'paper', yref = 'paper',
+                      font = list(color = 'rgba(8, 8, 8, 1)',
+                                  size = 12))  %>%
+      add_annotations(bgcolor = 'rgba(126, 235, 148, 0.25)',
+                      x = 0.015, y = 0.57,
+                      text = "13/04: normal lockdown again",
+                      showarrow = FALSE, xref = 'paper', yref = 'paper',
+                      font = list(color = 'rgba(8, 8, 8, 1)',
+                                  size = 12)) 
+    
+    
+    fig3_raw_data <- plot_ly()
+    fig3_raw_data <-
+      fig3_raw_data %>%
+      add_bars(x = filter_data2$fechas, y = smooth_ma_cases,
+               name = paste0("Smoothing MA ", ma_lag, "-days: cases"),
+               marker = list(color = 'rgba(231, 208, 3, 0.7)',
+                             line = list(color = 'rgba(33, 5, 75, 1)',
+                                         width = 1.5)),
+               offsetgroup = 1, yaxis = "y")
+    
+    fig3_raw_data <-
+      fig3_raw_data %>%
+      add_bars(x = filter_data2$fechas, y = smooth_ma_discharges,
+               name = paste0("Smoothing MA ", ma_lag, "-days: discharges"),
+               marker = list(color = 'rgba(114, 178, 242, 0.8)',
+                             line = list(color = 'rgba(33, 5, 75, 1)',
+                                         width = 1.3)),
+               offsetgroup = 2, yaxis = "y")
+    
+    fig3_raw_data <-
+      fig3_raw_data %>%
+      add_bars(x = filter_data2$fechas,  y = smooth_ma_deaths,
+               name = paste0("Smoothing MA ", ma_lag, "-days: deaths"),
+               marker = list(color = 'rgba(232, 93, 95, 0.8)',
+                             line = list(color = 'rgba(33, 5, 75, 1)',
+                                         width = 1.5)),
+               offsetgroup = 3, yaxis = "y")
+    
+    # Layout
+    fig3_raw_data <- fig3_raw_data %>%
+      layout(title =
+               paste0("New daily cases, deaths and discharges in Spain with ",
+                      "MA ", ma_lag, "-days smoothing, ",
+                      "source: Datadista Github repository\n",
+                      "Graphics by Javier Álvarez Liébana"),
+             xaxis = list(title = "Dates",
+                          tickfont = list(size = 14,
+                                          color = 'rgb(107, 107, 107)'),
+                          tickangle = -45),
+             yaxis = list(title = "Amount of people",
+                          titlefont = list(size = 16,
+                                           color = 'rgb(107, 107, 107)'),
+                          tickfont = list(size = 14,
+                                          color = 'rgb(107, 107, 107)'),
+                          side = "right"),
+             legend = list(bgcolor = I('gray70'),
+                           bordercolor = 'rgba(255, 255, 255, 1)',
+                           x = 1.1, y = 1), barmode = 'group', bargap = 0.08,
+             margin = list(b = 100)) %>%
+      add_annotations(bgcolor = 'rgba(126, 235, 148, 0.25)',
+                      x = 0.005, y = 0.99, text = "NOTES:",
+                      showarrow = FALSE, xref = 'paper', yref = 'paper',
+                      font = list(color = 'rgba(8, 8, 8, 1)',
+                                  size = 18))  %>%
+      add_annotations(bgcolor = 'rgba(126, 235, 148, 0.25)',
+                      x = 0.015, y = 0.9,
+                      text = "09/03: closing schools in Madrid",
+                      showarrow = FALSE, xref = 'paper', yref = 'paper',
+                      font = list(color = 'rgba(8, 8, 8, 1)',
+                                  size = 12))  %>%
+      add_annotations(bgcolor = 'rgba(126, 235, 148, 0.25)',
+                      x = 0.015, y = 0.84,
+                      text = "10/03: closing schools in Vitoria",
+                      showarrow = FALSE, xref = 'paper', yref = 'paper',
+                      font = list(color = 'rgba(8, 8, 8, 1)',
+                                  size = 12))  %>%
+      add_annotations(bgcolor = 'rgba(126, 235, 148, 0.25)',
+                      x = 0.015, y = 0.78,
+                      text = "10/03: cancelled flights from Italy",
+                      showarrow = FALSE, xref = 'paper', yref = 'paper',
+                      font = list(color = 'rgba(8, 8, 8, 1)',
+                                  size = 12))  %>%
+      add_annotations(bgcolor = 'rgba(126, 235, 148, 0.25)',
+                      x = 0.015, y = 0.72,
+                      text = "14/03: lockdown",
+                      showarrow = FALSE, xref = 'paper', yref = 'paper',
+                      font = list(color = 'rgba(8, 8, 8, 1)',
+                                  size = 12))  %>%
+      add_annotations(bgcolor = 'rgba(126, 235, 148, 0.25)',
+                      x = 0.015, y = 0.635,
+                      text = "28/03: extreme lockdown: just essential workers",
+                      showarrow = FALSE, xref = 'paper', yref = 'paper',
+                      font = list(color = 'rgba(8, 8, 8, 1)',
+                                  size = 12))  %>%
+      add_annotations(bgcolor = 'rgba(126, 235, 148, 0.25)',
+                      x = 0.015, y = 0.57,
+                      text = "13/04: normal lockdown again",
+                      showarrow = FALSE, xref = 'paper', yref = 'paper',
+                      font = list(color = 'rgba(8, 8, 8, 1)',
+                                  size = 12)) 
+    
+    
+    # Creating a new axis scale if we plot susceptible
+    ay2 <- list(overlaying = "y", side = "left",
+               title = "Scale of mortality rate")
+    
+    # Figure of raw data
+    fig4_raw_data <- plot_ly()
+    fig4_raw_data <-
+        fig4_raw_data %>%
+      add_trace(x = filter_data2$fechas,
+                y = filter_data2$fallecimientos_acum / population$total,
+                name = "Mortality rate",
+                type = "scatter", mode = "markers+lines",
+                line = list(color = 'rgba(47, 152, 5, 1)'),
+                marker = list(color = 'rgba(232, 93, 95, 0.8)',
+                              size = 9,
+                              line = list(color = 'rgba(33, 5, 75, 1)',
+                                          width = 2)), yaxis = "y2")
+    
+    fig4_raw_data <-
+      fig4_raw_data %>%
+      add_trace(x = filter_data2$fechas,
+                y = filter_data2$fallecimientos_acum / filter_data2$casos_acum,
+                name = "Fatality rate",
+                type = "scatter", mode = "markers+lines",
+                line = list(color = 'rgba(110, 5, 152, 1)'),
+                marker = list(color = 'rgba(7, 139, 176, 0.8)',
+                              size = 9,
+                              line = list(color = 'rgba(33, 5, 75, 1)',
+                                          width = 2)), yaxis = "y")
+    
+    # Layout
+    fig4_raw_data <- fig4_raw_data %>%
+      layout(yaxis2 = ay2,
+             title =
+               paste0("Mortality and fatality rates in Spain (no predictive), ",
+                      "source: Datadista Github repository\n",
+                      "Graphics by Javier Álvarez Liébana"),
+             xaxis = list(title = "Dates",
+                          tickfont = list(size = 14,
+                                          color = 'rgb(107, 107, 107)'),
+                          tickangle = -45),
+             yaxis = list(title = "Scale of fatality rate",
+                          titlefont = list(size = 16,
+                                           color = 'rgb(107, 107, 107)'),
+                          tickfont = list(size = 14,
+                                          color = 'rgb(107, 107, 107)'),
+                          side = "right"),
+             legend = list(bgcolor = I('gray70'),
+                           bordercolor = 'rgba(255, 255, 255, 1)',
+                           x = 1.1, y = 1)) %>%
       add_annotations(bgcolor = 'rgba(126, 235, 148, 0.25)',
                       x = 0.01, y = 0.99, text = "NOTES:",
                       showarrow = FALSE, xref = 'paper', yref = 'paper',
@@ -266,6 +589,13 @@ plot_descriptive_curves <-
       vel_actives <-
         replace(vel_actives, is.na(vel_actives) | is.infinite(vel_actives), 0)
       
+      vel_discharges <-
+        c(0, filter_data$altas_acum[2:length(filter_data$altas_acum)] /
+            filter_data$altas_acum[1:(length(filter_data$altas_acum) - 1)]) - 1
+      vel_discharges <-
+        replace(vel_discharges, is.na(vel_discharges) | 
+                  is.infinite(vel_discharges), 0)
+      
       vel_recovered <- c(0, recovered[2:length(recovered)] /
                            recovered[1:(length(recovered) - 1)]) - 1
       vel_recovered <-
@@ -298,6 +628,13 @@ plot_descriptive_curves <-
                               fill = 'tozeroy',
                               fillcolor = 'rgba(232, 93, 95, 0.3)',
                               line = list(color = 'rgba(232, 93, 95, 0.3)'))
+      fig_vel <-
+        fig_vel %>% add_trace(x = filter_data$fechas, y = vel_discharges,
+                              name = 'Daily growth (%) of discharges',
+                              fill = 'tozeroy',
+                              fillcolor = 'rgba(5, 81, 13, 0.3)',
+                              line = list(color = 'rgba(5, 81, 13, 0.3)'))
+      
       fig_vel <- fig_vel %>%
         layout(title = paste0("Daily growth (%) in Spain (no predictive), ",
                               "source: Datadista Github repository\n",
@@ -317,18 +654,197 @@ plot_descriptive_curves <-
       
     }
     
+    # Population pyramids
+    fig_pop_pyram_cases <- NULL
+    fig_pop_pyram_deaths <- NULL
+    if (plot_pop_pyram) {
+      
+      # Remove unuseful levels
+      data_by_age_sex <-
+        data_by_age_sex[data_by_age_sex$sexo != "ambos" &
+                          data_by_age_sex$rango_edad != "Total" &
+                          data_by_age_sex$rango_edad != "80 y +", ]
+      
+      # Extract dates and ages
+      dates <- unique(data_by_age_sex$fecha)
+      data_by_age_sex$rango_edad <- factor(data_by_age_sex$rango_edad)
+      ages <- unique(data_by_age_sex$rango_edad)
+      
+      # Recombine the data.frame including all data for a date first
+      data_by_ages <- data.frame()
+      for (i in 1:length(ages)) {
+        
+        data_by_ages <-
+          rbind(data_by_ages,
+                data_by_age_sex[data_by_age_sex$rango_edad == ages[i], ])
+        
+      }
+      
+      # Rename the levels
+      data_by_ages$sexo <- factor(data_by_ages$sexo)
+      levels(data_by_ages$sexo) <- c("male", "female")
+      
+      # Remove unuseful variables
+      data_by_ages$hospitalizados <- NULL
+      data_by_ages$ingresos_uci <- NULL
+      
+      # Compute negative values for male, positive values for female
+      data_by_ages$casos_sign <- data_by_ages$casos_confirmados
+      data_by_ages$casos_sign[data_by_ages$sexo == "male"] <- -1 *
+        data_by_ages$casos_confirmados[data_by_ages$sexo == "male"]
+      
+      data_by_ages$fallecidos_sign <-data_by_ages$fallecidos
+      data_by_ages$fallecidos_sign[data_by_ages$sexo == "male"] <- -1 *
+        data_by_ages$fallecidos[data_by_ages$sexo == "male"]
+      
+      for (d in 1:length(data_by_ages$fecha)) {
+        
+        data_by_ages$casos_acum[d] <-
+          data$casos_acum[as.character(data$fechas) ==
+                            as.character(data_by_ages$fecha)[d]]
+        data_by_ages$fallecidos_acum[d] <-
+          data$fallecimientos_acum[as.character(data$fechas) ==
+                                     as.character(data_by_ages$fecha)[d]]
+        
+        if (data_by_ages$sexo[d] == "male") {
+          
+          aux <-
+            data_male$casos_confirmados_acum[as.character(data_male$fechas) ==
+                                               as.character(data_by_ages$fecha)[d]]
+          aux2 <-
+            data_male$fallecidos_acum[as.character(data_male$fechas) ==
+                                        as.character(data_by_ages$fecha)[d]]
+          
+        } else {
+          
+          aux <-
+            data_female$casos_confirmados_acum[as.character(data_female$fechas) ==
+                                                 as.character(data_by_ages$fecha)[d]]
+          aux2 <-
+            data_female$fallecidos_acum[as.character(data_female$fechas) ==
+                                          as.character(data_by_ages$fecha)[d]]
+          
+        }
+        
+        data_by_ages$casos_acum_sexo[d] <- aux
+        data_by_ages$fallecidos_acum_sexo[d] <- aux2
+      }
+      data_by_ages$date <- data_by_ages$fecha
+      
+      if (pop_pyram_by_sex) {
+        
+        range <- c(-25, 25)
+        dtick <- 2
+        tickvals <- c(-rev(round(seq(0, 25, by = 2), 2)),
+                     round(seq(0, 25, by = 2), 2))
+        ticktext <-
+          as.character(c(rev(round(seq(0, 25, by = 2), 2)),
+                         round(seq(0, 25, by = 2), 2)))
+        pop <- data_by_ages$casos_acum_sexo
+        
+      } else {
+        
+        range <- c(-7.5, 7.5)
+        dtick <- 0.75
+        tickvals <- c(-rev(round(seq(0, 7.5, by = 0.75), 2)),
+                      round(seq(0, 7.5, by = 0.75), 2))
+        ticktext <- as.character(c(rev(round(seq(0, 7.5, by = 0.75), 2)),
+                                   round(seq(0, 7.5, by = 0.75), 2)))
+        pop <- data_by_ages$casos_acum
+        
+      }
+      
+      fig_pop_pyram_cases <- plot_ly()
+      fig_pop_pyram_cases <-
+        fig_pop_pyram_cases %>%
+        add_bars(data = data_by_ages,
+                 x = data_by_ages$casos_sign * 100 / pop,
+                 y = ~rango_edad, color = ~sexo, frame = ~date,
+                 orientation = 'h', hoverinfo = 'text',
+                 text = ~casos_confirmados) %>%
+        layout(title = paste0("% cum. cases by sex/ages ",
+                              "(resp. ", ifelse(pop_pyram_by_sex, "sex",
+                                                "total"), ") in Spain. ",
+                              "Source: Datadista Github repository. ",
+                              "Graphics by J. Álvarez Liébana"),
+               bargap = 0.1, barmode = 'overlay',
+               xaxis = list(title = "% resp. of cum. cases",
+                            range = range, dtick = dtick,
+                            tickvals = tickvals, ticktext = ticktext,
+                            tickfont = list(size = 15,
+                                            color = 'rgb(107, 107, 107)'),
+                            tickangle = -45),
+               yaxis = list(title = "Ages"))
+      
+      
+      if (pop_pyram_by_sex) {
+        
+        range <- c(-50, 50)
+        dtick <- 5
+        tickvals <- c(-rev(round(seq(0, 50, by = 5), 2)),
+                      round(seq(0, 50, by = 5), 2))
+        ticktext <-
+          as.character(c(rev(round(seq(0, 50, by = 5), 2)),
+                         round(seq(0, 50, by = 5), 2)))
+        pop <- data_by_ages$fallecidos_acum_sexo
+        
+      } else {
+        
+        range <- c(-15, 15)
+        dtick <- 2
+        tickvals <- c(-rev(round(seq(0, 15, by = 2), 2)),
+                      round(seq(0, 15, by = 2), 2))
+        ticktext <-
+          as.character(c(rev(round(seq(0, 15, by = 2), 2)),
+                         round(seq(0, 15, by = 2), 2)))
+        pop <- data_by_ages$fallecidos_acum
+        
+      }
+      
+      fig_pop_pyram_deaths <- plot_ly()
+      fig_pop_pyram_deaths <-
+        fig_pop_pyram_deaths %>%
+        add_bars(data = data_by_ages,
+                 x = data_by_ages$fallecidos_sign * 100 / pop,
+                 y = ~rango_edad, color = ~sexo, frame = ~date,
+                 orientation = 'h', hoverinfo = 'text',
+                 text = ~casos_confirmados) %>%
+        layout(title = paste0("% cum. deaths by sex/ages ",
+                              "(resp. ", ifelse(pop_pyram_by_sex, "sex",
+                                                "total"), ") in Spain. ",
+                              "Source: Datadista Github repository. ",
+                              "Graphics by J. Álvarez Liébana"),
+               bargap = 0.1, barmode = 'overlay',
+               xaxis = list(title = "% resp. of cum. deaths",
+                            range = range, dtick = dtick,
+                            tickvals = tickvals, ticktext = ticktext,
+                            tickfont = list(size = 15,
+                                            color = 'rgb(107, 107, 107)'),
+                            tickangle = -45),
+               yaxis = list(title = "Ages"))
+      
+    }
+    
     # Output
-    return(list("fig_raw_data" = fig_raw_data, "fig_by_sex" = fig_by_sex,
-                "fig_vel" = fig_vel))
+    return(list("fig_SIR_data" = fig_raw_data, "fig_daily_data" = fig2_raw_data,
+                "fig_smooth_daily_data" = fig3_raw_data,
+                "fig_fat_mort_data" = fig4_raw_data,
+                "fig_by_sex" = fig_by_sex, "fig_vel" = fig_vel,
+                "fig_pop_pyram_cases" = fig_pop_pyram_cases,
+                "fig_pop_pyram_deaths" = fig_pop_pyram_deaths))
     
 }
 
 
+##
+## Function to provide some descriptive analysis and graphics about Spain data
+##
 desc_analysis_spa_data <- function(url_raw_data, url_data_by_age_sex,
                                    var_names_raw_data, var_names_sex_age_data,
                                    population, suscep = FALSE, by_sex = TRUE,
-                                   plot_vel = TRUE) {
-  
+                                   plot_vel = TRUE, ma_lag = 7,
+                                   plot_pop_pyram = TRUE,
+                                   pop_pyram_by_sex = FALSE) {
   
   ##
   ## LOADING DATA
@@ -387,8 +903,12 @@ desc_analysis_spa_data <- function(url_raw_data, url_data_by_age_sex,
   # Plotting
   figures <-
     plot_descriptive_curves(data_spa, population, data_male = data_male_spa,
-                            data_female = data_female_spa, suscep = suscep,
-                            by_sex = by_sex, plot_vel = plot_vel)
+                            data_female = data_female_spa,
+                            data_by_age_sex = data_by_age_sex_spa,
+                            suscep = suscep, by_sex = by_sex,
+                            plot_vel = plot_vel, ma_lag = ma_lag,
+                            plot_pop_pyram = plot_pop_pyram,
+                            pop_pyram_by_sex = pop_pyram_by_sex)
   
   # Output
   return(figures)

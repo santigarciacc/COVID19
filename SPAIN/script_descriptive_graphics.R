@@ -42,6 +42,13 @@ by_sex <- TRUE
 #           and recovered? Defaults to TRUE.
 plot_vel <- TRUE
 
+# ma_lag: smoothed graphics about daily data will be plotted. Smoothing
+#         is performed by adopting a moving-average procedure considering the
+#         previous ma_lag days
+ma_lag <- 7
+
+plot_pop_pyram = TRUE
+pop_pyram_by_sex = FALSE
 
 
 # Names of variables of the table where the raw data is contained
@@ -70,7 +77,9 @@ population <- data.frame("total" = 47100396, "male" = 23089389,
 figures <- desc_analysis_spa_data(url_raw_data, url_data_by_age_sex,
                                   var_names_raw_data, var_names_sex_age_data,
                                   population, suscep = suscep, by_sex = by_sex,
-                                  plot_vel = plot_vel)
+                                  plot_vel = plot_vel, ma_lag = ma_lag,
+                                  plot_pop_pyram = plot_pop_pyram,
+                                  pop_pyram_by_sex = TRUE)
 
 
 
